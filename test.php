@@ -15,16 +15,20 @@ use Psr\Http\Message\ServerRequestInterface;
 use WyriHaximus\React\Http\Middleware\SessionMiddleware;
 
 
+$port = 80;
 
-ReactKernel::start(function () {
-
-    $port = 80;
-
-    if (PHP_SAPI === 'cli') {
-        if (!empty($argv[1])) {
-            $port = $argv[1];
-        }
+if (PHP_SAPI === 'cli') {
+    if (!empty($argv[1])) {
+         $port = $argv[1];
     }
+}
+    
+print $port;
+
+ReactKernel::start(function () use ($port) {
+
+    
+    
 
     $loop = Factory::create();
     $cache = new ArrayCache();
