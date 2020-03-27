@@ -14,7 +14,17 @@ use React\Socket\Server as SocketServer;
 use Psr\Http\Message\ServerRequestInterface;
 use WyriHaximus\React\Http\Middleware\SessionMiddleware;
 
+
+
 ReactKernel::start(function () {
+
+    $port = 80;
+
+    if (PHP_SAPI === 'cli') {
+        if (!empty($argv[1])) {
+            $port = $argv[1];
+        }
+    }
 
     $loop = Factory::create();
     $cache = new ArrayCache();
@@ -35,9 +45,9 @@ ReactKernel::start(function () {
     $ftp = new Server([new Router(Router::FTP)]);
 
     yield [
-        $api->listen(new SocketServer(8080, $loop)),
-        $web->listen(new SocketServer(80, $loop)),
-        $ftp->listen(new SocketServer(21, $loop))
+        //$api->listen(new SocketServer(8080, $loop)),
+        $web->listen(new SocketServer($port, $loop)),
+        //$ftp->listen(new SocketServer(21, $loop))
     ];
 
     $loop->run();
