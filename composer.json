@@ -1,6 +1,5 @@
 {
     "name": "land-travel/land-travel",
-    
     "description": "", 
     "require": {
         "php": "^7.3.0",
