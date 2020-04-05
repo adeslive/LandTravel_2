@@ -42,5 +42,5 @@ function addBody($body){
 
 function redirect(string $url): Response
 {
-    return morphResponse(new Response(302, ['Location'=> $url]));
+    return new Response(302, ['Location'=> $url]);
 }

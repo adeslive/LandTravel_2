@@ -2,37 +2,51 @@
 
 namespace RPF\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface;
+use Mimey\MimeTypes;
+use DirectoryIterator;
 use React\Http\Response;
+use Psr\Http\Message\ServerRequestInterface;
 
-
-final class ResourceHandler 
+final class ResourceHandler
 {
+    const CACHE_DIR = __DIR__ . '/../../cache/misc';
+
+    public function __construct(string $dir)
+    {
+        $this->dir = $dir;
+    }
+
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
-        $path_parts = explode("/", $request->getUri()->getPath());
+        $parts = explode("/", urldecode($request->getUri()->getPath()));
         $start = -1;
-        $final_path = "";
 
-        foreach($path_parts as $index => $part) {
-            if (preg_match("/^^(js|img|css|vendors)$/", $part)){
+        foreach ($parts as $index => $part) {
+            if (preg_match("/^(js|img|css|video|favicon.ico)$/", $part)) {
                 $start = $index;
             }
         }
 
-        if ($start != -1){
-            for($i = $start; $i < sizeof($path_parts); $i++){
-                $final_path .= "/" . $path_parts[$i];
+        if ($start != -1) {
+            $path = "";
+            for ($i = $start; $i < sizeof($parts); $i++) {
+                $path .= "/" . $parts[$i];
             }
-    
-            $path = __DIR__.'/../../resources' . $final_path;
-            if (file_exists($path)){
-                $handler = fopen($path, 'r');
-                $file = fread($handler, filesize($path));
+            $real_path = $this->dir . $path;
+
+            if (file_exists($real_path)){
+                $handler = fopen($real_path, 'r');
+                $file = fread($handler, filesize($real_path));
                 fclose($handler);
-                return new Response(200, ['Content-type' => mime_content_type($path)], $file);
+                $mimes = new MimeTypes;
+
+                $parts = explode(".", $path);
+
+                return new Response(200, ['Content-Type' => $mimes->getMimeType($parts[sizeof($parts)-1])], $file);
             }
+            return new Response(404);
         }
+
         return $next($request);
     }
 }

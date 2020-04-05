@@ -1,1 +1,1 @@
-web: php test.php 0.0.0.0:$PORT
+web: php test.php $PORT

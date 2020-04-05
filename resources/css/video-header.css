@@ -1,0 +1,51 @@
+#myVideo {
+  position: sticky;
+  background-size: cover;
+  top:0;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  height: auto;
+  width: auto;
+  z-index: -100;
+}
+
+.overlay {
+  background: rgba(0,0,0, .4);
+  position: fixed;
+  top:-60px;
+  bottom: -150px;
+  left: 0;
+  right:0;
+  z-index: -100;
+}
+
+.content
+{
+  position: relative;
+  top: -18em;
+}
+
+.viaje-title
+{
+  position: relative;
+  top: -2em;
+  color: white;
+}
+
+.viaje-img
+{
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.rutas
+{
+  overflow-y: hidden;
+  max-height: 45rem;
+}
+
+.rutas:hover{
+  overflow-y: scroll;
+}

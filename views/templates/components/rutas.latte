@@ -1,0 +1,34 @@
+<div class="list-group rutas">
+    {foreach $rutas as $ruta}
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm w-100">
+                    <small class="mb-1"><i class="fas fa-plane-departure"></i> Inicio: {$ruta['inicio']}</small><br>
+                    <small class="mb-1"><i class="fas fa-hourglass-start"></i> Fecha Salida: {$ruta['fecha_salida']|date:'%d/%m/%Y'}</small>
+                </div>
+                <div class="col-sm w-100">
+                    <small class="mb-1"><i class="fas fa-plane-arrival"></i> Destino: {$ruta['destino']}</small><br>
+                    <small class="mb-1"><i class="fas fa-hourglass-end"></i> Fecha Llegada: {$ruta['fecha_llegada']|date:'%d/%m/%Y'}</small>
+                </div>   
+            </div>
+
+            <div class="mt-4">
+                <div class="row">
+                    <div class="col-sm w-100">
+                        <small class="mb-1"><i class="fas fa-bus"></i> Transporte: {$ruta['transporte']}</small><br>
+                    </div>  
+                    <div class="col-sm w-100">
+                        <small class="mb-1"><i class="fas fa-directions"></i> Tour: {$ruta['tour'] ? $ruta['tour'] : 'Sin Tour'}</small><br>
+                    </div>  
+                </div>
+                
+                <small class="mb-1"><i class="fas fa-hotel"></i> Hotel: {$ruta['hotel'] ? $ruta['hotel'] : 'Sin Hotel' }</small><br>
+                {if $ruta['hotel']}
+                <small class="mb-1"><i class="fas fa-moon"></i> Noches: {$ruta['noches']}</small>
+                {/if}
+            </div>
+        </div>
+    </div>
+    {/foreach}
+</div>

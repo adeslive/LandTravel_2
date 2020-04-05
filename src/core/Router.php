@@ -60,7 +60,5 @@ final class Router
                 $params = array_values($info[2]);
                 return $info[1]($request, ...$params);
         }
-
-        return;
     }
 }

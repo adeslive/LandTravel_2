@@ -2,18 +2,22 @@
 
 namespace RPF\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface;
+use Exception;
 use React\Http\Response;
-use RuntimeException;
+use Psr\Http\Message\ServerRequestInterface;
 
 final class ErrorHandler {
 
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
-        try{
-            return $next($request);
-        }catch(RuntimeException $e){
-            return new Response(200, ['Content-Type: text/plain'], $e->getMessage());
-        }
+        return $next($request)
+            ->then(function(Response $response){
+                return $response;
+            })
+            ->otherwise(
+                function (Exception $e) {
+                    return new Response(500, ['Content-type' => 'text/plain'], $e->getMessage());
+                }
+            );
     }
 }

@@ -21,7 +21,8 @@
         "twig/html-extra": "^3.0",
         "react/cache": "^1.0",
         "wyrihaximus/react-http-middleware-session": "^3.0",
-        "latte/latte": "^2.7"
+        "latte/latte": "^2.7",
+        "ralouphie/mimey": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -33,6 +34,7 @@
             "src/helpers/response.php",
             "src/helpers/session.php",
             "src/helpers/view.php",
+            "src/helpers/db.php",
             "src/routes/api.php",
             "src/routes/web.php",
             "src/routes/ftp.php"

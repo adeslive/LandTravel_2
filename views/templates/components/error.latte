@@ -1,0 +1,15 @@
+{extends 'modal.latte'}
+
+{block modalcontent}
+<div id="modal-body-{$titulo}" class="modal-body">
+    <div class="row">
+        <i class="fas fa-exclamation-triangle" style="color:red;width:80px;height:80px;"></i>
+        <div class="col">
+            <p id="error-message" class="h4 mt-4">¡Ha ocurrido un error!</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+{/block}

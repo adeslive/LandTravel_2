@@ -1,0 +1,85 @@
+{extends '../base/base.latte'}
+
+{block body}
+<div class="row">
+    <div class="col">
+        <div class="display-4 text-center ">{$viaje['titulo']}</div>
+        <div class="mt-4 ml-3">
+            <h3 class="my-3">Descripción del viaje</h3>
+            <p class="text-justify">{$viaje['descripcion']}</p>
+            <div class="row">
+                <div class="col">
+                    <img class="img-fluid rounded viaje-img" src="img/test.jpg" alt="...">
+                </div>
+                <div class="col-sm-4">
+                    <table class="table table-borderless text-right">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Costo</th>
+                                <td>${$viaje['costo']}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Descuentos</th>
+                                <td>- ${isset($viaje['descuentos']) ? $viaje['descuentos'] : 0}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Subtotal</th>
+                                <td>${$viaje['costo']}</td>
+                            </tr>
+                            </tr>
+                                <th scope="row">Total</th>
+                                <td colspan="2">${$viaje['costo']}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5 mt-4">
+        <form id="form">
+            <h4 class="mb-3">Payment</h4>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cc-name">Name on card</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                    <small class="text-muted">Full name as displayed on card</small>
+                    <div class="invalid-feedback">
+                        Name on card is required
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="cc-number">Credit card number</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                    <div class="invalid-feedback">
+                        Credit card number is required
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="cc-expiration">Expiration</label>
+                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                    <div class="invalid-feedback">
+                        Expiration date required
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="cc-expiration">CVV</label>
+                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                    <div class="invalid-feedback">
+                        Security code required
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Solicitar pago</button>
+        </form>
+    </div>
+</div>
+{/block}
+
+{block scripts}
+<script src="js/cc.js"></script>
+{/block}
