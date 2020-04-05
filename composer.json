@@ -1,7 +1,9 @@
 {
     "name": "land-travel/land-travel",
+    
     "description": "", 
     "require": {
+        "php": "^7.3.0",
         "phpmailer/phpmailer": "^6.1",
         "react/event-loop": "^1.1",
         "react/http": "^0.8.6",
