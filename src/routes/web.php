@@ -72,19 +72,9 @@ web()->addGroup('/',function()
     // Rutas Viaje
     web()->addGroup('viajes/',function() {
         web()->addRoute(['GET'], '', function(ServerRequestInterface $request) {
-            $ip = $request->getServerParams()['REMOTE_ADDR'];
-            if ($ip == '127.0.0.1'){
-                return components('viajes')->then(function(array $viajes){
-                    return view('viajes/viajes', ['viajes' => $viajes]);
-                });
-            }else{
-                $data = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=".$ip));
-                var_export($data);
-                return db()->query('SELECT * FROM viajes WHERE codigo_pais = ?',[$data['geoplugin_countryCode']])->then(function(array $viajes){
-                    return view('viajes/viajes', ['viajes' => $viajes]);
-                });
-            }
-            
+            return components('viajes')->then(function(array $viajes){
+                return view('viajes/viajes', ['viajes' => $viajes]);
+            });
         });
 
 
