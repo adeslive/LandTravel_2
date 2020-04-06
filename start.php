@@ -41,7 +41,7 @@ $ftp = new Server([new Router(Router::FTP)]);
 
 
 //$api->listen(new SocketServer(8080, $loop)),
-$web->listen(new SocketServer("$port", $loop));
+$web->listen(new SocketServer($port, $loop));
 //$ftp->listen(new SocketServer(21, $loop))
 
 
