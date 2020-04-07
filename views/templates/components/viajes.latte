@@ -11,11 +11,32 @@
             <div class="card-body">
               <h5 class="card-title">{$viaje['titulo']} <small class="text-muted">${$viaje['costo']}</small> </h5>
               <p class="card-text">{$viaje['descripcion']}</p>
-              <div class="mb-3 btn-group" role="group">
-                <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
-                <a class="btn btn-primary" href="{$viaje['id']}/comprar">Comprar ahora</a>
-                <a class="btn btn-secondary" href="{$viaje['id']}/reservar">Reservar</a>
-              </div>
+              {ifset $user}
+                {if $user['tipo_usuario'] == 'Admin'}
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
+                  <a class="btn btn-danger" href="{$viaje['id']}/modificar">Modificar</a>
+                  <a class="btn btn-warning" href="{$viaje['id']}/eliminar">Eliminar</a>
+                </div>
+                {elseif $user['tipo_usuario'] == 'Guia'}
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="{$viaje['id']}/tours">Ver tours</a>
+                </div>
+                {else}
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="{$viaje['id']}/comprar">Comprar ahora</a>
+                  <a class="btn btn-secondary" href="{$viaje['id']}/reservar">Reservar</a>
+                </div>
+                {/if}
+              {else}
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="{$viaje['id']}/comprar">Comprar ahora</a>
+                  <a class="btn btn-secondary" href="{$viaje['id']}/reservar">Reservar</a>
+                </div>
+              {/ifset}
             </div>
           </div>
         </div>

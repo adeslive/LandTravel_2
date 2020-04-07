@@ -23,15 +23,18 @@
         "react/cache": "^1.0",
         "wyrihaximus/react-http-middleware-session": "^3.0",
         "latte/latte": "^2.7",
-        "ralouphie/mimey": "^2.1"
+        "ralouphie/mimey": "^2.1",
+        "wyrihaximus/react-http-middleware-response-cache": "^3.1"
     },
     "autoload": {
         "psr-4": {
+            "CONTROLLERS\\":"controllers",
             "CONFIG\\":"config",
             "RPF\\":"src"
         },
         "files": [
             "config/routes.php",
+            "src/helpers/controller.php",
             "src/helpers/response.php",
             "src/helpers/session.php",
             "src/helpers/view.php",

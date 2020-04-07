@@ -50,11 +50,8 @@ function findComponentPath(string $name)
 
 function view(string $name, array $variables = []): Response
 {
-    $session = getSession();
-    if ($session->isActive())
-    {
-        var_export($session->getContents());
-        $variables['SESSION'] = $session->getContents();
+    if (getSession()->isActive() && !empty(getSession()->getContents())) {
+        $variables['user'] = getSession()->getContents();
     }
     return ViewBuilder::Render(findView($name), $variables);
 }

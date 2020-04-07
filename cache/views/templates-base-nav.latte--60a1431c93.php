@@ -24,11 +24,56 @@ class Template60a1431c93 extends Latte\Runtime\Template
       <li class="nav-item">
         <a class="nav-link" href="/viajes/">Viajes</a>
       </li>
+<?php
+		if (isset($user)) {
+			if ($user['tipo_usuario'] == 'Admin') {
+?>
+        <li class="nav-item">
+          <a class="nav-link" href="/guias/">Guías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tours/">Tours</a>
+        </li>
+<?php
+			}
+			elseif ($user['tipo_usuario'] == 'Guia') {
+?>
+        <li class="nav-item">
+          <a class="nav-link" href="/guias/">Tours</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tours/">Calendario</a>
+        </li>
+<?php
+			}
+			else {
+?>
+        <li class="nav-item">
+          <a class="nav-link" href="/guias/">Historial</a>
+        </li>
+<?php
+			}
+		}
+?>
     </ul>
 <?php
-		if (isset($SESSION)) {
+		if (isset($user)) {
 ?>
-    
+    <ul class="navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i> <?php echo LR\Filters::escapeHtmlText($user['pnombre']) /* line 41 */ ?> <?php
+			echo LR\Filters::escapeHtmlText($user['papellido']) /* line 41 */ ?>
+
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="/perfil">Perfil</a>
+          <a class="dropdown-item" href="/configuracion">Configuración</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+        </div>
+      </li>
+    </ul>
 <?php
 		}
 		else {
@@ -40,7 +85,7 @@ class Template60a1431c93 extends Latte\Runtime\Template
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 <?php
-			/* line 25 */
+			/* line 58 */
 			$this->createTemplate('../usuarios/login.latte', $this->params, "include")->renderToContentType('html');
 ?>
         </div>

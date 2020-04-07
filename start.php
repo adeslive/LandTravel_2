@@ -32,7 +32,7 @@ $api = new Server([
 
 $web = new Server([
     new ResourceHandler(__DIR__ . DIRECTORY_SEPARATOR . 'resources'),
-    new SessionMiddleware('REACTPHP_SESSION',$cache),
+    new SessionMiddleware('REACTPHP_SESSION',$cache,[600 ,'','',false,false]),
     new Initiator($loop),
     new Router(ROUTER::WEB)
 ]);
@@ -43,6 +43,4 @@ $ftp = new Server([new Router(Router::FTP)]);
 //$api->listen(new SocketServer(8080, $loop)),
 $web->listen(new SocketServer($port, $loop));
 //$ftp->listen(new SocketServer(21, $loop))
-
-
 $loop->run();

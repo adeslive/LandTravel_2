@@ -5,11 +5,12 @@ namespace RPF\core;
 use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
+use RPF\Core\Guard;
 
 final class Route 
 {
     private $routes;
-
+    
     public function __construct()
     {
         $this->routes = new RouteCollector(new Std(), new GroupCountBased);

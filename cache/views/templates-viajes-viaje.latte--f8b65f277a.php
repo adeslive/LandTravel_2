@@ -3,7 +3,7 @@
 
 use Latte\Runtime as LR;
 
-class Template2e6d1620c7 extends Latte\Runtime\Template
+class Templatef8b65f277a extends Latte\Runtime\Template
 {
 	public $blocks = [
 		'css' => 'blockCss',

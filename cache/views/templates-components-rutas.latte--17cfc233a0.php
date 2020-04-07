@@ -3,7 +3,7 @@
 
 use Latte\Runtime as LR;
 
-class Template63e1d26810 extends Latte\Runtime\Template
+class Template17cfc233a0 extends Latte\Runtime\Template
 {
 
 	function main()
@@ -15,7 +15,7 @@ class Template63e1d26810 extends Latte\Runtime\Template
 		$iterations = 0;
 		foreach ($rutas as $ruta) {
 ?>
-    <div class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="ruta list-group-item list-group-item-action flex-column align-items-start">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm w-100">

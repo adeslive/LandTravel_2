@@ -45,7 +45,9 @@ class Template2967f3f1cf extends Latte\Runtime\Template
 		extract($_args);
 		/* line 4 */
 		$this->createTemplate('../components/viajes.latte', $this->params, "include")->renderToContentType('html');
-		
+?>
+	
+<?php
 	}
 
 

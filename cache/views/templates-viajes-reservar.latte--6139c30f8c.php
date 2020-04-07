@@ -1,9 +1,9 @@
 <?php
-// source: C:\Users\adesl\Documents\GitHub\LandTravel\src\core/../../views/templates/viajes/comprar.latte
+// source: C:\Users\adesl\Documents\GitHub\LandTravel\src\core/../../views/templates/viajes/reservar.latte
 
 use Latte\Runtime as LR;
 
-class Template4b459b8deb extends Latte\Runtime\Template
+class Template6139c30f8c extends Latte\Runtime\Template
 {
 	public $blocks = [
 		'body' => 'blockBody',
@@ -59,19 +59,19 @@ class Template4b459b8deb extends Latte\Runtime\Template
                         <tbody>
                             <tr>
                                 <th scope="row">Costo</th>
-                                <td>$<?php echo LR\Filters::escapeHtmlText($viaje['costo']) /* line 19 */ ?></td>
+                                <td>$<?php echo LR\Filters::escapeHtmlText($viaje['costo']*0.3) /* line 19 */ ?></td>
                             </tr>
                             <tr>
                                 <th scope="row">Descuentos</th>
-                                <td>- $<?php echo LR\Filters::escapeHtmlText(isset($viaje['descuentos']) ? $viaje['descuentos'] : 0) /* line 23 */ ?></td>
+                                <td> $<?php echo LR\Filters::escapeHtmlText(isset($viaje['descuentos']) ? - $viaje['descuentos'] : 0) /* line 23 */ ?></td>
                             </tr>
                             <tr>
                                 <th scope="row">Subtotal</th>
-                                <td>$<?php echo LR\Filters::escapeHtmlText($viaje['costo']) /* line 27 */ ?></td>
+                                <td>$<?php echo LR\Filters::escapeHtmlText($viaje['costo']*0.3) /* line 27 */ ?></td>
                             </tr>
                             </tr>
                                 <th scope="row">Total</th>
-                                <td colspan="2">$<?php echo LR\Filters::escapeHtmlText($viaje['costo']) /* line 31 */ ?></td>
+                                <td colspan="2">$<?php echo LR\Filters::escapeHtmlText($viaje['costo']*0.3) /* line 31 */ ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,11 +81,11 @@ class Template4b459b8deb extends Latte\Runtime\Template
     </div>
     <div class="col-sm-5 mt-4">
         <form id="form">
-            <h4 class="mb-3">Payment</h4>
+            <h4 class="mb-3">Pago</h4>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="cc-name">Name on card</label>
+                    <label for="cc-name">Nombre y Apellido</label>
                     <input type="text" class="form-control" id="cc-name" placeholder="" required>
                     <small class="text-muted">Full name as displayed on card</small>
                     <div class="invalid-feedback">
@@ -93,7 +93,7 @@ class Template4b459b8deb extends Latte\Runtime\Template
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="cc-number">Credit card number</label>
+                    <label for="cc-number">Numero de la tarjeta</label>
                     <input type="text" class="form-control" id="cc-number" placeholder="" required>
                     <div class="invalid-feedback">
                         Credit card number is required
@@ -102,15 +102,15 @@ class Template4b459b8deb extends Latte\Runtime\Template
             </div>
             <div class="row">
                 <div class="col-md-3 mb-3">
-                    <label for="cc-expiration">Expiration</label>
-                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                    <label for="cc-expiration">Expiracion</label>
+                    <input type="text" class="form-control" id="expiration" placeholder="" required>
                     <div class="invalid-feedback">
                         Expiration date required
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="cc-expiration">CVV</label>
-                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                    <input type="text" class="form-control" id="cvv" placeholder="" required>
                     <div class="invalid-feedback">
                         Security code required
                     </div>

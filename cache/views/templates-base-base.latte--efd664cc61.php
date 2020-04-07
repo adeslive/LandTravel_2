@@ -44,6 +44,10 @@ class Templateefd664cc61 extends Latte\Runtime\Template
 	<header>
 <?php
 		$this->renderBlock('header', get_defined_vars());
+		/* line 19 */
+		$this->createTemplate('../components/loading.latte', ['titulo' => 'loading-login'] + $this->params, "include")->renderToContentType('html');
+		/* line 20 */
+		$this->createTemplate('../components/error.latte', ['titulo' => 'error-login'] + $this->params, "include")->renderToContentType('html');
 ?>
 	</header>
 

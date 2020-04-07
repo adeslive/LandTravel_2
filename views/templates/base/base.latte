@@ -16,6 +16,8 @@
         {block header}
         {include 'nav.latte'}
         {/block}
+		{include '../components/loading.latte', titulo => 'loading-login'}
+		{include '../components/error.latte', titulo => 'error-login'}
 	</header>
 
 	<body>

@@ -1,127 +1,40 @@
 <?php
 
 use function Config\Routes\web;
-use function React\Promise\reject;
-use function React\Promise\resolve;
-
 use Psr\Http\Message\ServerRequestInterface;
-use React\Http\Response;
-use React\Promise\Promise;
-use RPF\Core\Mailer;
 
-web()->addGroup('/',function()
-{
-    web()->addRoute(['HEAD','GET'], '', function(ServerRequestInterface $request) {
-        return view('index');
-    });
-    
-    // Registrarse
-    web()->addRoute(['GET'], 'registrar', function(ServerRequestInterface $request) {
-        return db()->query('SELECT * FROM pais')
-                ->then(function(array $values){
-                        return view('usuarios/registrar', ['paises' => $values]);
-                });
-    });
+web()->addGroup('/', function () {
+    // Index
+    web()->addRoute(['GET'], '', controller('Index/index'));
 
-    web()->addRoute(['POST'], 'registrar', function(ServerRequestInterface $request) {
-        $data = $request->getParsedBody();
-        
-        /*return db()->query('SELECT 1 FROM usuarios WHERE email = ?', [$data['correo']])
-            ->then(function(array $values){
-                return empty($values) ? resolve() : reject(new RuntimeException('El correo ya existe'));
-            })
-            ->then(function() use ($data) {
-                return db()->query('SELECT 1 FROM usuarios WHERE pasaporte = ?', [$data['pasaporte']])
-                    ->then(function(array $values){
-                        return empty($values) ? resolve() : reject(new RuntimeException('El pasaporte ya existe'));
-                    });
-            })
-            ->then(function() use ($data) {
-                return db()->query('SELECT 1 FROM usuarios WHERE telefono = ?', [$data['telefono']])
-                    ->then(function(array $values){
-                        return empty($values) ? resolve() : reject(new RuntimeException('El telefono ya existe'));
-                    });
-            })
-            ->then(function() use ($data) {
-                return db()->query('call final.nueva_persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $data)
-                    ->then(function(){
-                        return getResponse();
-                    });
-            })
-            ->otherwise(function(RuntimeException $e){
-                return new Response(500, ['Content-type' => 'application/json'], json_encode(['message' => $e->getMessage()]));
-            });*/
+    // Pagina de registro
+    web()->addRoute(['GET'], 'registrar', controller('Auth/registrarse'));
 
-        try{
-            Mailer::emailConfirmacion($data);
-        } catch (Exception $e) {
-            print $e->getMessage();
-        }
-        return getResponse();
-    });
+    // Crear el usuario
+    web()->addRoute(['POST'], 'registrar', controller('Auth/nuevo'));
 
     // Recuperar contraseña
-    web()->addRoute(['GET'], 'recuperar', function(ServerRequestInterface $request) {
-        return view('viajes/viajes');
-    });
+    web()->addRoute(['GET'], 'recuperar', controller('Auth/recuperar'));
 
-    web()->addRoute(['POST'], 'login', function(ServerRequestInterface $request) {
-        return view('viajes/viajes');
-    });
+    // Login
+    web()->addRoute(['POST'], 'login', controller('Auth/login'));
+
+    // logout
+    web()->addRoute('GET', 'logout', controller('Auth/logout'));
 
     // Rutas Viaje
-    web()->addGroup('viajes/',function() {
-        web()->addRoute(['GET'], '', function(ServerRequestInterface $request) {
-            return components('viajes')->then(function(array $viajes){
-                return view('viajes/viajes', ['viajes' => $viajes]);
-            });
-        });
+    web()->addGroup('viajes/', function () {
+        // Todos
+        web()->addRoute(['GET'], '', controller('Viaje/index'));
 
+        // Solo uno
+        web()->addRoute(['GET'], '{id:\d+}', controller('Viaje/show'));
 
-        web()->addRoute(['GET'], '{id:\d+}', function(ServerRequestInterface $request, string $id) {
-                
-        
-                return components('viajes', $id)
-                    ->then(function(array $viaje){
+        // Comprar un viaje
+        web()->addRoute(['GET'], '{id:\d+}/comprar', controller('Viaje/paginaComprar'));
 
-                        if (empty($viaje)){
-                            return redirect('/');
-                        }
+        web()->addRoute(['GET'], '{id:\d+}/reservar', controller('Viaje/paginaReservar'));
 
-                        return components('rutas')
-                            ->then(function(array $rutas) use ($viaje){
-                                return view('viajes/viaje', ['viaje' => $viaje[0], 'rutas' => $rutas]);
-                            });
-                    });
-                    
-        });
-
-        web()->addRoute(['GET'], '{id:\d+}/comprar', function(ServerRequestInterface $request, string $id) {
-           
-    
-            return components('viajes', $id)
-                ->then(function(array $viaje){
-
-                    if (empty($viaje)){
-                        return redirect('/');
-                    }
-
-                    return view('viajes/comprar', ['viaje' => $viaje[0]]);
-                }); 
-        });
-
-        web()->addRoute(['GET'], '{id:\d+}/reservar', function(ServerRequestInterface $request, string $id) {
-            
-    
-            return components('viajes', $id)
-                ->then(function(array $viaje){
-
-                    if (empty($viaje)){
-                        return redirect('/');
-                    }
-
-                    return view('viajes/reservar', ['viaje' => $viaje[0]]);
-                }); 
-        });
+        web()->addRoute(['GET'], '{id:\d+}/modificar', controller('Viaje/paginaModificar'));
     });
 });

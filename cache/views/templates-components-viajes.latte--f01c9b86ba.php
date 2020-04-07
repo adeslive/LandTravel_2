@@ -27,11 +27,45 @@ class Templatef01c9b86ba extends Latte\Runtime\Template
               <h5 class="card-title"><?php echo LR\Filters::escapeHtmlText($viaje['titulo']) /* line 12 */ ?> <small class="text-muted">$<?php
 				echo LR\Filters::escapeHtmlText($viaje['costo']) /* line 12 */ ?></small> </h5>
               <p class="card-text"><?php echo LR\Filters::escapeHtmlText($viaje['descripcion']) /* line 13 */ ?></p>
-              <div class="mb-3 btn-group" role="group">
-                <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 15 */ ?>"> Mas detalles </a> 
-                <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 16 */ ?>/comprar">Comprar ahora</a>
-                <a class="btn btn-secondary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 17 */ ?>/reservar">Reservar</a>
-              </div>
+<?php
+				if (isset($user)) {
+					if ($user['tipo_usuario'] == 'Admin') {
+?>
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 17 */ ?>"> Mas detalles </a> 
+                  <a class="btn btn-danger" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 18 */ ?>/modificar">Modificar</a>
+                  <a class="btn btn-warning" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 19 */ ?>/eliminar">Eliminar</a>
+                </div>
+<?php
+					}
+					elseif ($user['tipo_usuario'] == 'Guia') {
+?>
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 23 */ ?>"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 24 */ ?>/tours">Ver tours</a>
+                </div>
+<?php
+					}
+					else {
+?>
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 28 */ ?>"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 29 */ ?>/comprar">Comprar ahora</a>
+                  <a class="btn btn-secondary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 30 */ ?>/reservar">Reservar</a>
+                </div>
+<?php
+					}
+				}
+				else {
+?>
+                <div class="mb-3 btn-group" role="group">
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 35 */ ?>"> Mas detalles </a> 
+                  <a class="btn btn-primary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 36 */ ?>/comprar">Comprar ahora</a>
+                  <a class="btn btn-secondary" href="<?php echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($viaje['id'])) /* line 37 */ ?>/reservar">Reservar</a>
+                </div>
+<?php
+				}
+?>
             </div>
           </div>
         </div>

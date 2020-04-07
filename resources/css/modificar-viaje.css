@@ -1,0 +1,23 @@
+.viaje-title
+{
+  position: relative;
+  top: -2em;
+  color: white;
+}
+
+.viaje-img
+{
+  max-width: 75%;
+  max-height: 75%;
+}
+
+.rutas
+{
+  overflow-y: hidden;
+  max-height: 315px;
+}
+
+.rutas:hover{
+  overflow-y: scroll;
+}
+

@@ -3,7 +3,7 @@
 
 use Latte\Runtime as LR;
 
-class Template8c23a54ae5 extends Latte\Runtime\Template
+class Template199b28a208 extends Latte\Runtime\Template
 {
 	public $blocks = [
 		'modalcontent' => 'blockModalcontent',

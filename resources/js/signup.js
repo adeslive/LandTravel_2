@@ -59,7 +59,7 @@ $('#form-datos').submit(function(e){
             })
             .fail(function(data){
                 $('#modal-loading').modal('hide');
-                $('#error-message').text(data.responseJSON.message);
+                $('#error-message-error').text(data.responseJSON.message);
                 $('#modal-error').modal('show');
             });
         });

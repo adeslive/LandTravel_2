@@ -1,9 +1,9 @@
 <?php
-// source: C:\Users\adesl\Documents\GitHub\LandTravel\views\templates\components\error.latte
+// source: C:\Users\adesl\Documents\GitHub\LandTravel\views\templates\components\loading.latte
 
 use Latte\Runtime as LR;
 
-class Template0d3226db4b extends Latte\Runtime\Template
+class Templatefd988bf28a extends Latte\Runtime\Template
 {
 	public $blocks = [
 		'modalcontent' => 'blockModalcontent',
@@ -39,14 +39,13 @@ class Template0d3226db4b extends Latte\Runtime\Template
 		extract($_args);
 		?><div id="modal-body-<?php echo LR\Filters::escapeHtmlAttr($titulo) /* line 4 */ ?>" class="modal-body">
     <div class="row">
-        <i class="fas fa-exclamation-triangle" style="color:red;width:80px;height:80px;"></i>
+        <div class="col-sm-4">
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
         <div class="col">
-            <p id="error-message" class="h4 mt-4">¡Ha ocurrido un error!</p>
+            <p class="h4 mt-4">Espere un momento</p>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>
 <?php
 	}
