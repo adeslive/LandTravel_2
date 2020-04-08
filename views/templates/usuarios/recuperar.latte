@@ -1,0 +1,44 @@
+{extends '../base/base.latte'}
+
+{block css}
+    <link rel="stylesheet" href="css/recuperar.css">
+    <link rel="stylesheet" href="css/main.css">
+{/block}
+
+{block body}
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="align-content: left;">
+            
+            <section id="div-correo" class="recover card card-body">
+                <h1>¿Olvidaste tu contraseña?</h1>
+                <p style="font-size: 18px;">Se le enviará un mensaje a su correo electrónico con el código a ingresar</p
+                    s>
+                <form method="POST" id="form-recuperar">
+                    <div class="row">
+                        <div class="col-12">
+                            <input name="correo" id="correo" type="email" placeholder="ejemplo@ejemplo.com" required><br>
+                        </div>
+                    </div>
+                    <input id="button-1" type="submit" class="next" value="Enviar Correo"></input>
+                </form>
+            </section>
+            
+            <section id="div-recuperar" class="recover card card-body" style="display:none;">
+                <h1>Recuperación de Contraseña</h1>
+                <p style="font-size: 18px;">Revise su correo electronico, se le ha enviado un código de recuperación.</p s>
+            </section>
+            
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+
+{include '../components/loading.latte', titulo => 'loading'}
+{include '../components/error.latte', titulo => 'error'}
+{/block}
+
+{block scripts}
+<script src="js/recuperar.js"></script>
+{/block}

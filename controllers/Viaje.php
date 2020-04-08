@@ -34,7 +34,7 @@ final class Viaje extends Controller
         return components('viajes', $id)
             ->then(function (array $viaje) {
 
-                if (empty($viaje)) {
+                if (empty($viaje) || !getSession()->isActive()) {
                     return redirect('/');
                 }
 
@@ -47,7 +47,7 @@ final class Viaje extends Controller
         return components('viajes', $id)
             ->then(function (array $viaje) {
 
-                if (empty($viaje)) {
+                if (empty($viaje) || !getSession()->isActive()) {
                     return redirect('/');
                 }
 

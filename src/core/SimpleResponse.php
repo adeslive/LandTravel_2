@@ -48,7 +48,7 @@ final class SimpleResponse extends Response
         return $this->withAddedHeader('Content-type', 'text/html');
     }
 
-    public static function OK(array $data = null): self
+    public static function OK($data = null): self
     {
         return new self(200, $data);
     }

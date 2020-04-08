@@ -16,9 +16,15 @@
         <h1 class="display-1 text-center viaje-title" >{$viaje['titulo']|capitalize}</h1>
         <div class="card border-2">
             <div class="container mt-3 buttons text-right">
+                {ifset $user}
                 <a class="mr-5">${$viaje['costo']}</a>
                 <a class="btn btn-primary" type="button" href="{$viaje['id']}/comprar">Comprar ahora</a>
-                <a class="btn btn-secondary" type="button" href="{$viaje['id']}/reservar"">Reservar</a>
+                <a class="btn btn-secondary" type="button" href="{$viaje['id']}/reservar">Reservar</a>
+                {else}
+                <a class="mr-5">Para comprar o reservar debes iniciar sesión.</a>
+                <a class="btn btn-primary disabled" type="button" href="{$viaje['id']}/comprar" disabled>Comprar ahora</a>
+                <a class="btn btn-secondary disabled" type="button" href="{$viaje['id']}/reservar" disabled>Reservar</a>
+                {/ifset}
             </div>
             <div class="card-body">
                 <div class="row">

@@ -51,9 +51,9 @@ final class Router
 
         switch ($info[0]) {
             case Dispatcher::NOT_FOUND:
-                return new Response(404);
+                return SimpleResponse::NOT_FOUND();
             case Dispatcher::METHOD_NOT_ALLOWED:
-                return new Response(403);
+                return SimpleResponse::METHOD_NOT_ALLOWED();
             case Dispatcher::FOUND:
                 initResponse();
                 initSession($request);

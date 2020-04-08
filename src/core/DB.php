@@ -9,9 +9,6 @@ use React\MySQL\QueryResult;
 use React\MySQL\Io\Connection;
 use React\Cache\CacheInterface;
 use React\EventLoop\LoopInterface;
-use Recoil\React\ReactKernel;
-
-use function React\Promise\resolve;
 
 final class DB
 {
@@ -24,11 +21,6 @@ final class DB
      * @var Connection
      */
     private $connection;
-    
-    /**
-     * @var string
-     */
-    private $last_query;
 
     /**
      * @var string
@@ -50,10 +42,6 @@ final class DB
      */
     private $raw_result;
 
-    /**
-     * @var int
-     */
-    private $status;
 
     /**
      * @var CacheInterface
@@ -64,7 +52,7 @@ final class DB
     const EXECUTED = 1;
     const ERROR = 2;
 
-    const URI = "api:apiPassword1@landtravel.cflb5buc7ktd.us-east-1.rds.amazonaws.com:3306/final";
+    const URI = "api:apiPassword1@localhost:3306/final";
 
     public function __construct(LoopInterface $loop, CacheInterface $cache = null, bool $lazy = true)
     {
@@ -94,7 +82,10 @@ final class DB
         assert(!empty($sql) || $sql != null);
         return $this->connection->query($sql, $vars)
                 ->then(
-                    function(QueryResult $result){
+                    function(QueryResult $result) use ($sql){
+                        $this->last_result = $this->result;
+                        $this->query = $sql;
+                        $this->raw_result = $result;
                         $this->result = [];
                         if (!empty($result->resultRows)){
                             foreach($result->resultRows as $row){

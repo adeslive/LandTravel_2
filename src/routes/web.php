@@ -14,7 +14,8 @@ web()->addGroup('/', function () {
     web()->addRoute(['POST'], 'registrar', controller('Auth/nuevo'));
 
     // Recuperar contraseña
-    web()->addRoute(['GET'], 'recuperar', controller('Auth/recuperar'));
+    web()->addRoute(['POST', 'GET'], 'recuperar', controller('Auth/recuperar'));
+    web()->addRoute(['POST', 'GET'], 'recuperar/{codigo}', controller('Auth/cambiarContraseña'));
 
     // Login
     web()->addRoute(['POST'], 'login', controller('Auth/login'));

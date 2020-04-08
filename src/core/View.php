@@ -11,14 +11,10 @@ class View
     private $name;
     private $relative_path;
     private $variables;
-    private $state;
 
     const TEMPLATE_DIR = __DIR__.'/../../views/templates/';
     const TEMPLATE_CACHE_DIR = __DIR__ .'/../../cache/views';
     
-    const BUILDING = 0;
-    const DISPLAYING = 1;
-
     public function __construct(string $name, string $path = "", array $variables = [])
     {
         $this->name = $name;

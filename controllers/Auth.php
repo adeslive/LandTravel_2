@@ -2,10 +2,8 @@
 
 namespace CONTROLLERS;
 
-use Exception;
 use RPF\Core\Mailer;
 use RuntimeException;
-use React\Http\Response;
 use RPF\Core\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 use RPF\core\SimpleResponse;
@@ -45,22 +43,20 @@ final class Auth extends Controller
             })
             ->then(function () use ($data) {
                 $data['contraseña'] = password_hash($data['contraseña'], PASSWORD_DEFAULT);
-                return db()->query('call final.nueva_persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $data)
-                    ->then(function () {
-                        return new Response(200);
+                db()->query("set @OUT_codigo = '0';");
+                return db()->query('call final.nueva_persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @OUT_codigo)', $data)
+                    ->then(function () use ($data) {
+                        return db()->query('select @OUT_codigo;')
+                            ->then(function(array $codigo) use ($data){
+                                $data['codigo'] = $codigo[0]['@OUT_ codigo'];
+                                Mailer::emailConfirmacion($data, $data['tipo_usuario']);
+                                return SimpleResponse::OK();
+                            });
                     });
             })
             ->otherwise(function (RuntimeException $e) {
-                return new Response(500, ['Content-type' => 'application/json'], json_encode(['message' => $e->getMessage()]));
+                return SimpleResponse::INTERNAL_ERROR($e->getMessage())->toJson('message');
             });
-
-        try {
-            Mailer::emailConfirmacion($data);
-        } catch (Exception $e) {
-            print $e->getMessage();
-        }
-        
-        return new Response(200);
     }
 
     public static function login(ServerRequestInterface $request)
@@ -90,7 +86,38 @@ final class Auth extends Controller
         return redirect('/');
     }
 
-    public static function recuperar(){
-        return view('viajes/viajes');
+    public static function recuperar(ServerRequestInterface $request){
+        if($request->getMethod() == 'POST'){
+            $data = $request->getParsedBody();
+    
+            return db()->query('SELECT 1 FROM usuario where email = ?', $data)
+                ->then(function(array $valor) use ($data) {
+
+                    if (empty($valor)) return SimpleResponse::BAD_REQUEST('Correo invalido')->toJson('message');
+                    db()->query("set @codigo = '0';");
+                    db()->query("call final.nuevo_codigo_respaldo(?, @codigo", $data);
+  
+                    return db()->query("select @codigo;")
+                        ->then(function(array $resultado) use ($data) {
+                            $codigo = $resultado[0]['@codigo'];
+                            Mailer::recuperarContraseña($data['correo'], $codigo);
+                            return SimpleResponse::OK();
+                        })->otherwise(function(){
+                            return SimpleResponse::BAD_REQUEST('Error inesperado')->toJson('message');
+                        });
+
+                });
+        }else{
+            return view('usuarios/recuperar');
+        }
+    }
+
+    public static function cambiarContraseña(ServerRequestInterface $request, $codigo)
+    {
+        if($request->getMethod() == 'POST'){
+            
+        }else{
+            return view('usuarios/recuperar');
+        }
     }
 }

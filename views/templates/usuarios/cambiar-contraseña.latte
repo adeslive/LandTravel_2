@@ -1,0 +1,53 @@
+{extends '../base/base.latte'}
+
+{block css}
+    <link rel="stylesheet" href="css/recuperar.css">
+    <link rel="stylesheet" href="css/main.css">
+{/block}
+
+{block body}
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="align-content: left;">
+            
+            <section id="div-email" class="recover card card-body" style="display:none;">
+                <h1>Recuperación de Contraseña</h1>
+                <p style="font-size: 18px;">Escriba la contraseña nueva.</p s>
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <input id="recuperar-contraseña" style="background-color: white;" type="text"
+                                placeholder="Contraseña"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input id="confimar-contrasenia" style="background-color: white;" type="text"
+                                placeholder="Confirmar Contraseña"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button id="button-confirmacion" type="button">Cambiar Contraseña</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            
+            <section id="div-correcto" class="recover card card-body" style="display:none;">
+                <h1>Recuperación de Contraseña</h1>
+                <p style="font-size: 20px;">Revisa tu correo!.</p s>
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="/login" id="button-confirmacion" class="btn btn-primary" type="button">Iniciar Sesión</a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+{/block}

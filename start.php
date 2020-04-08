@@ -1,12 +1,11 @@
 <?php
 
-require 'vendor/autoload.php';
+require __DIR__. '/vendor/autoload.php';
 
 use RPF\core\Router;
 use React\Http\Server;
 use React\Cache\ArrayCache;
 use React\EventLoop\Factory;
-use React\Http\Response;
 use RPF\Middleware\Initiator;
 use RPF\Middleware\ErrorHandler;
 use RPF\Middleware\ResourceHandler;
@@ -15,10 +14,15 @@ use WyriHaximus\React\Http\Middleware\SessionMiddleware;
 
 
 $port = 80;
+$port2 = 8080;
 
 if (PHP_SAPI === 'cli') {
     if (!empty($argv[1])) {
         $port = $argv[1];
+    }
+
+    if (!empty($argv[2])) {
+        $port2 = $argv[2];
     }
 }
 
@@ -27,7 +31,7 @@ $cache = new ArrayCache();
 
 $api = new Server([
     new ErrorHandler(),
-    new Router()
+    new Router(ROUTER::API)
 ]);
 
 $web = new Server([
@@ -37,10 +41,10 @@ $web = new Server([
     new Router(ROUTER::WEB)
 ]);
 
-$ftp = new Server([new Router(Router::FTP)]);
+//$ftp = new Server([new Router(Router::FTP)]);
 
 
-//$api->listen(new SocketServer(8080, $loop)),
+$api->listen(new SocketServer($port2, $loop));
 $web->listen(new SocketServer($port, $loop));
 //$ftp->listen(new SocketServer(21, $loop))
 $loop->run();

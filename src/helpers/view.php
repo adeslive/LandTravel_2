@@ -26,7 +26,7 @@ function findView(string $name)
     if (file_exists($path)){
         return new View($real_name[sizeof($real_name)- 1], $parts[sizeof($parts)-1]);
     }
-    return false;
+    return findView('errors/ViewNotFound.latte');
 }
 
 function findComponentPath(string $name)

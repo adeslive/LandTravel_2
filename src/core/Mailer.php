@@ -48,22 +48,28 @@ final class Mailer
         }
     }
 
-    public static function emailConfirmacion(array $data) 
+    public static function emailConfirmacion(array $data, string $tipo) 
     {
-        
-            $latte = new Engine();
-            $subject = 'Credenciales de usuario';
+        $latte = new Engine();
+        $subject = 'Credenciales de usuario';
+
+        if ($tipo == 'Guía'){
             $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/guia.latte', $data);
-            $mail = new self($data['correo'], $subject, $body);
-            $mail->send();
-        
+        }else{
+            $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/cliente.latte', $data);
+        }
+
+        $mail = new self($data['correo'], $subject, $body);
+        $mail->send();
     }
-    public static function emailContraseñaPerdida(string $destinatario, string $codigo) 
+
+    public static function recuperarContraseña(string $destinatario, string $codigo) 
     {
         $subject = 'Recuperar credenciales';
         $body = "
         <h1> Land Travel </h1>
-        <p> El codigo para restrablecer contraseña es: $codigo </p>";
+        <p> Haz click en el codigo de recuperacion</p>
+        <a href='http://localhost/recuperar/$codigo'></a>";
         $mail = new self($destinatario, $subject, $body);
         $mail->send();
     }
