@@ -1,4 +1,5 @@
 <?php
+
 namespace RPF\core;
 
 use React\Http\Io\HttpBodyStream;
@@ -8,8 +9,14 @@ use function RingCentral\Psr7\stream_for;
 
 final class SimpleResponse extends Response
 {
+    private $converted = false;
+
     function __construct(int $code, $data = null)
     {
+        if (is_array($data)) {
+            $data = json_encode($data);
+            $this->converted = true;
+        }
         $header = ['Content-type' => 'text/plain'];
 
         parent::__construct(
@@ -19,33 +26,60 @@ final class SimpleResponse extends Response
         );
     }
 
-    public function toJson(string $key = ''){
+    public function toJson(string $key = '')
+    {
         $response = $this->withoutHeader('Content-type');
         $response = $response->withAddedHeader('Content-type', 'application/json');
-        if ($key == '') {
-            $response = $response->withBody(stream_for(json_encode($this->getBody()->getContents())));
-        }else{
-            $response = $response->withBody(stream_for(json_encode([$key => $this->getBody()->getContents()])));
+
+        if (!$this->converted) {
+            if ($key == '') {
+                $response = $response->withBody(stream_for(json_encode($this->getBody()->getContents())));
+            } else {
+                $response = $response->withBody(stream_for(json_encode([$key => $this->getBody()->getContents()])));
+            }
         }
 
         return $response;
     }
 
-    public function toPDF(){
+    public function toPDF()
+    {
         $response = $this->withoutHeader('Content-type');
         $response = $this->withAddedHeader('Content-type', 'application/pdf');
-        
+
         return $response;
     }
 
-    public function toPlain(){
+    public function toPlain()
+    {
         $this->withoutHeader('Content-type');
         return $this->withAddedHeader('Content-type', 'text/plain');
     }
 
-    public function toHTML(){
+    public function toHTML()
+    {
         $this->withoutHeader('Content-type');
         return $this->withAddedHeader('Content-type', 'text/html');
+    }
+
+    public static function DOWNLOAD()
+    {
+        $dir = __DIR__ . '/../../resources/pdf/text.txt';
+        $quoted = sprintf('"%s"', addcslashes(basename($dir), '"\\'));
+        $handler = fopen($dir, 'r');
+
+        $response = new Response(
+            200,
+            [
+                'Content-Description' => 'File Transfer',
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename=' . $quoted,
+                'Content-Transfer-Encoding' => 'binary'
+            ],
+            fread($handler, filesize($dir))
+        );
+
+        return $response;
     }
 
     public static function OK($data = null): self

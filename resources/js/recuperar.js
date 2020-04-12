@@ -9,7 +9,7 @@ $('#form-recuperar').submit(function (e) {
             datatype: "JSON"
         })
         .done(function (data) {
-            console.log(data);
+
             $('#div-correo').css('display','none');
             $('#div-recuperar').css('display','block');
             $('#modal-loading').modal('hide');

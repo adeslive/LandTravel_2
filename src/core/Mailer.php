@@ -63,14 +63,12 @@ final class Mailer
         $mail->send();
     }
 
-    public static function recuperarContraseña(string $destinatario, string $codigo) 
+    public static function recuperarContraseña(array $data) 
     {
+        $latte = new Engine();
         $subject = 'Recuperar credenciales';
-        $body = "
-        <h1> Land Travel </h1>
-        <p> Haz click en el codigo de recuperacion</p>
-        <a href='http://localhost/recuperar/$codigo'></a>";
-        $mail = new self($destinatario, $subject, $body);
+        $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/recuperar.latte', ['codigo' => $data['codigo']]);
+        $mail = new self($data['correo'], $subject, $body);
         $mail->send();
     }
 }

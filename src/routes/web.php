@@ -27,15 +27,28 @@ web()->addGroup('/', function () {
     web()->addGroup('viajes/', function () {
         // Todos
         web()->addRoute(['GET'], '', controller('Viaje/index'));
-
         // Solo uno
         web()->addRoute(['GET'], '{id:\d+}', controller('Viaje/show'));
-
         // Comprar un viaje
         web()->addRoute(['GET'], '{id:\d+}/comprar', controller('Viaje/paginaComprar'));
 
         web()->addRoute(['GET'], '{id:\d+}/reservar', controller('Viaje/paginaReservar'));
 
         web()->addRoute(['GET'], '{id:\d+}/modificar', controller('Viaje/paginaModificar'));
+    });
+
+    // Rutas Guias
+    web()->addGroup('guias/', function () {
+
+        // Guias
+        web()->addRoute(['GET'], 'tours', controller('Guia/tours'));
+
+        /**
+         *  La peticion para ver una pagina web debe ser GET para que el navegador la despliegue.
+         *  primero define bien la ruta.
+         */
+        web()->addRoute(['GET'], 'contrato/{id}', controller('Guia/contrato'));
+
+        web()->addRoute(['GET'], 'tours/feed', controller('Guia/feed'));
     });
 });

@@ -62,7 +62,7 @@ final class Auth extends Controller
     public static function login(ServerRequestInterface $request)
     {
         $datos = $request->getParsedBody();
-        return db()->query('SELECT pnombre, papellido, tipo_usuario, contraseña FROM usuarios WHERE email = ?', [$datos['correo']])
+        return db()->query('SELECT id, pnombre, papellido, tipo_usuario, contraseña FROM usuarios WHERE email = ?', [$datos['correo']])
             ->then(function (array $values) use ($datos) {
                 if (empty($values)) {
                     return SimpleResponse::INTERNAL_ERROR('El correo no existe')->toJson('message');
@@ -90,22 +90,24 @@ final class Auth extends Controller
         if($request->getMethod() == 'POST'){
             $data = $request->getParsedBody();
     
-            return db()->query('SELECT 1 FROM usuario where email = ?', $data)
+            return db()->query('SELECT 1 FROM usuario where email = ?', [$data['correo']])
                 ->then(function(array $valor) use ($data) {
-
                     if (empty($valor)) return SimpleResponse::BAD_REQUEST('Correo invalido')->toJson('message');
+                    
                     db()->query("set @codigo = '0';");
-                    db()->query("call final.nuevo_codigo_respaldo(?, @codigo", $data);
-  
-                    return db()->query("select @codigo;")
-                        ->then(function(array $resultado) use ($data) {
-                            $codigo = $resultado[0]['@codigo'];
-                            Mailer::recuperarContraseña($data['correo'], $codigo);
-                            return SimpleResponse::OK();
-                        })->otherwise(function(){
-                            return SimpleResponse::BAD_REQUEST('Error inesperado')->toJson('message');
-                        });
+                    return db()->query("call final.nuevo_codigo_respaldo(?, @codigo);", [$data['correo']])
+                        ->then(function() use ($data){
 
+                            return db()->query("select @codigo;")
+                                ->then(function(array $resultado) use ($data) {
+                                    $data['codigo'] = $resultado[0]['@codigo'];
+                                    Mailer::recuperarContraseña($data);
+                                    return SimpleResponse::OK();
+                                })->otherwise(function(){
+                                    return SimpleResponse::BAD_REQUEST('Error inesperado')->toJson('message');
+                                });
+
+                        });
                 });
         }else{
             return view('usuarios/recuperar');
@@ -115,9 +117,38 @@ final class Auth extends Controller
     public static function cambiarContraseña(ServerRequestInterface $request, $codigo)
     {
         if($request->getMethod() == 'POST'){
-            
+            $data = $request->getParsedBody();
+           
+            return db()->query('SELECT id FROM usuario WHERE codigo_respaldo = ?', [$codigo])
+                ->then(function(array $values)  {
+                    return !empty($values) ? resolve() : reject();
+                })
+                ->then(function() use ($data){
+                    $data['id'] = db()->getResult()[0]['id'];
+                    $data['contraseña'] = password_hash($data['contraseña'], PASSWORD_DEFAULT);
+                    return db()->query('UPDATE usuario SET codigo_respaldo = null, contraseña = ? WHERE id = ?', [$data['contraseña'], $data['id']])
+                        ->then(function(){
+                            return SimpleResponse::OK();
+                        })
+                        ->otherwise(function(){
+                            return SimpleResponse::INTERNAL_ERROR('Error inesperado')->toJson('message');
+                        });
+                })
+                ->otherwise(function(){
+                    return SimpleResponse::BAD_REQUEST(['message' => 'Hubo un error'])->toJson();
+                });
+
         }else{
-            return view('usuarios/recuperar');
+            return db()->query('SELECT 1 FROM usuario WHERE codigo_respaldo = ?', [$codigo])
+                ->then(function(array $values)  {
+                    return !empty($values) ? resolve() : reject();
+                })
+                ->then(function() use ($codigo){
+                    return view('usuarios/cambiar-contraseña',['codigo' => $codigo]);
+                })
+                ->otherwise(function(){
+                    return view('usuarios/cambiar-contraseña');
+                });
         }
     }
 }
