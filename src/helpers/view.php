@@ -48,12 +48,16 @@ function findComponentPath(string $name)
     return false;
 }
 
-function view(string $name, array $variables = []): Response
+/**
+ * @return Response|String
+ */
+function view(string $name, array $variables = [], bool $string = false)
 {
     if (getSession()->isActive() && !empty(getSession()->getContents())) {
         $variables['user'] = getSession()->getContents();
     }
-    return ViewBuilder::Render(findView($name), $variables);
+
+    return $string == false ? ViewBuilder::Render(findView($name), $variables) : ViewBuilder::Render(findView($name), $variables, true);
 }
 
 function components(string $name, string $id = "")

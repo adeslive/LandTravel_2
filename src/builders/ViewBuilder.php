@@ -15,7 +15,10 @@ final class ViewBuilder
         return $view->build();
     }
 
-    public static function Render (View $view, array $variables = null)  {
+    public static function Render (View $view, array $variables = null, bool $string = false)  {
+        
+        if ($string == true) return $view->render($variables);
+
         try{
             addBody($view->render($variables));
         }catch (RuntimeException $e){

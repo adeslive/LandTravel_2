@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 final class ResourceHandler
 {
     const CACHE_DIR = __DIR__ . '/../../cache/misc';
+    const RESOURCE_DIR = __DIR__ . '/../../resources';
 
     public function __construct(string $dir)
     {

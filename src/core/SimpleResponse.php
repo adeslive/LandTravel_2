@@ -62,11 +62,10 @@ final class SimpleResponse extends Response
         return $this->withAddedHeader('Content-type', 'text/html');
     }
 
-    public static function DOWNLOAD()
+    public static function DOWNLOAD($path)
     {
-        $dir = __DIR__ . '/../../resources/pdf/text.txt';
-        $quoted = sprintf('"%s"', addcslashes(basename($dir), '"\\'));
-        $handler = fopen($dir, 'r');
+        $quoted = sprintf('"%s"', addcslashes(basename($path), '"\\'));
+        $handler = fopen($path, 'r');
 
         $response = new Response(
             200,
@@ -76,7 +75,7 @@ final class SimpleResponse extends Response
                 'Content-Disposition' => 'attachment; filename=' . $quoted,
                 'Content-Transfer-Encoding' => 'binary'
             ],
-            fread($handler, filesize($dir))
+            fread($handler, filesize($path))
         );
 
         return $response;
