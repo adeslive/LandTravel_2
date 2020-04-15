@@ -143,8 +143,8 @@ final class Guia extends Controller
     {
         $today = new DateTime();
         $later = date_add(new DateTime(), date_interval_create_from_date_string('3 months'));
-        $body = PDF::createPDFTemplate('pdf/contrato', ['today' => $today, 'later' => $later], ['format' => 'Letter'], true, 'css/contrato.css')->getBody();
-        return SimpleResponse::OK($body)->toPDF();
+        $pdf = PDF::createPDFTemplate('pdf/contrato', ['today' => $today, 'later' => $later], ['format' => 'Letter'], true, 'css/contrato.css');
+        return SimpleResponse::DOWNLOAD($pdf->path);
     }
 
     public static function contratoGuia(ServerRequestInterface $request, string $id)
