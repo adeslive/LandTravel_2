@@ -72,12 +72,40 @@ final class Guia extends Controller
 
     public static function historial(ServerRequestInterface $request)
     {
-        $guia_id = getSession()->getContents()['guia_id'];
-        return db()->query('SELECT * FROM tours_guia WHERE guia_id = ?', [$guia_id])
-            ->then(function($tours){
+        $guia_id =  1; //getSession()->getContents()['guia_id'];
+        $params = $request->getQueryParams();
+        var_export($request->getQueryParams());
+
+        if (sizeof($params) == 0){
+            return db()->query('SELECT * FROM tours_guia WHERE guia_id = ? AND fecha_salida <= ?', [$guia_id, date('Y-m-d')])
+                ->then(function($tours){
+            
+                    return view('guias/historial', ['tours' => $tours]);
+                });
+        }
+
+        if($params['start'] != '' && $params['end'] != '')
+        {
+            return db()->query('SELECT * FROM tours_guia WHERE guia_id = ? AND fecha_salida <= ? AND fecha_inicio >= ?', [$guia_id, $params['end'], $params['start']])
+                ->then(function($tours){
+            
+                    return view('guias/historial', ['tours' => $tours]);
+                });
+        }else if($params['start'] != ''){
+            return db()->query('SELECT * FROM tours_guia WHERE guia_id = ? AND fecha_inicio >= ? AND fecha_salida <= NOW()', [$guia_id, $params['start']])
+                ->then(function($tours){
+            
+                    return view('guias/historial', ['tours' => $tours]);
+                });
+        }else{
+            return db()->query('SELECT * FROM tours_guia WHERE guia_id = ? AND fecha_salida =< ?', [$guia_id, $params['end']])
+                ->then(function($tours){
+            
+                    return view('guias/historial', ['tours' => $tours]);
+                });
+        }
+
         
-                return view('guias/historial', ['tours' => $tours]);
-            });
             
     }
 
@@ -140,6 +168,17 @@ final class Guia extends Controller
     }
 
     public static function contrato(ServerRequestInterface $request)
+    {
+        $guia_id = 1;
+        return db()->query('SELECT * FROM guias WHERE guia_id = ?', [$guia_id])
+            ->then(function($valores){
+
+                return view('guias/contrato', ['guia' => $valores[0]]);
+            });
+        
+    }
+
+    public static function descargaContrato(ServerRequestInterface $request)
     {
         $today = new DateTime();
         $later = date_add(new DateTime(), date_interval_create_from_date_string('3 months'));

@@ -1,0 +1,118 @@
+body{
+
+	background-color: #FAE5D3;
+	font-family: Cambria;
+}
+
+.principal{
+	background-color:#F8F9F9;
+}
+
+.rotulo{
+	width: 100%;
+	height: 9%;
+}
+
+.control{
+	height: 16%;
+}
+
+.tabla{
+	width: 100%;
+	height: auto;
+	margin-left: 20px;
+}
+
+.table{
+	margin: auto;
+}
+
+.rotulo h1{
+	text-align: center;
+}
+
+.guia{
+	height: 5%;
+}
+.guia label{
+	margin-left: 20px;
+	font-size: 20px;
+}
+
+.guia input{
+	margin-left: 20px;
+	width: 30em;
+}
+
+.formulario{
+	margin-top: 15px;
+	margin: auto;
+}
+
+.formularioPrincipal{
+	width: 100%;
+}
+
+.fechaInicio{
+	width: 20%;
+	height: 5%;
+	float: left; 
+}
+.fechaInicio label{
+	font-size: 20px;
+	margin-left: 20px;
+}
+
+.fechaInicio input{
+	width: 200px;
+	margin-left: 20px;
+	text-align: center;
+}
+
+.fechaFinalizacion{
+	width: 20%;
+	height: 5%;
+	float: left;
+}
+
+.fechaFinalizacion label{
+	font-size: 20px;
+}
+
+.fechaFinalizacion input{
+	width: 200px;
+	text-align: center;
+}
+
+.filtro{
+	width: 8%;
+	float: left;
+}
+
+.filtro button{
+	width: 100px;
+	height: 40px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 28px;
+	line-height: 2px;
+}
+
+.descarga{
+	width: 10%;
+	float: left;
+}
+
+.descarga button{
+	width: 120px;
+	height: 40px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 28px;
+	margin-left: 3rem;
+	line-height: 2px;
+}
+
+.descarga button > a{
+	color: white;
+}

@@ -1,5 +1,68 @@
 {extends '../base/base.latte'}
 
+{block css}
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/filtroHistorico.css">
+{/block}
+
 {block body}
-	{include '../components/tours-historial.latte'}
+	<div class="rotulo">
+				<h1>HISTORIAL DE RUTAS ASIGNADAS Y CUBIERTAS</h1><br><br>
+			</div>
+
+			<div class="row control">
+				<div class="col">
+					<form class="formulario" method="GET" name="FormularioDatos" id="FormularioDatos">
+						<div class="formularioPrincipal">
+
+							<div class="fechaInicio">
+								<label for="fecha">Fecha de Inicio</label>
+								<input type="date" name="start">
+							</div>
+
+							<div class="fechaFinalizacion">
+								<label for="fecha">Fecha de Finalización</label>
+								<input type="date" name="end">
+							</div>
+
+							<div class="filtro">
+								<button type="submit" class="btn btn-primary">Filtrar</button>
+							</div>
+
+							<div class="descarga">
+								<button class="btn btn-primary" type="button"><a href="historial/descargar">Descargar</a></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="tabla">
+				<table class="table table-sm mt-5">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Nombre del Tour</th>
+							<th scope="col">Ciudad</th>
+							<th scope="col">Fecha de Inicio</th>
+							<th scope="col">Fecha de Finalización</th>
+							<th scope="col">Horas Trabajadas</th>
+						</tr>
+					</thead>
+					<tbody class="table-striped">
+
+						{foreach $tours as $tour}
+							<tr>
+								<td>{$tour['nombre']}</td>
+								<td>{$tour['ciudad']}</td>
+								<td>{$tour['fecha_inicio']}</td>
+								<td>{$tour['fecha_salida']}</td>
+								<td>{$tour['horas']}</td>
+							</tr>
+						{/foreach}
+					
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
 {/block}

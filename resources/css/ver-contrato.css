@@ -1,0 +1,81 @@
+
+.derecha{
+    background-color: blueviolet;
+}
+
+
+
+.fondo {
+    background-image: url('http://traveladvisor.chimpgroup.com/wp-content/uploads/Slide-03.jpg');
+	padding: 20px 100px;
+	text-align: center;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+.fondo h1 {
+	font-size: 40px;
+	color: #fff;
+	position: relative
+}
+
+.disp{
+display: inline;
+}
+
+.fondo:before {
+   
+	content:'';
+	position: absolute;
+        top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.6);
+}
+
+
+.derecha{
+    background-color:rgb(255, 88, 51,0.534); 
+    padding: 30px;
+    color:white;
+    margin-bottom: 30px;
+}
+
+.izquierda{
+    background-color: rgba(0, 0, 0, 0.5); 
+    color:white;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+
+.botones{
+    background-color:rgb(255, 88, 51)!important ;
+    color: white!important;
+}
+
+.color{
+    color: white;
+}
+
+.colorn{
+    color:rgb(255, 88, 51);
+    transition: .4s all;
+}
+
+.colorn:hover{
+    transform: rotate(360deg);
+
+}
+
+.mostrar{
+    
+}
+
+
+.inputText{
+    
+}

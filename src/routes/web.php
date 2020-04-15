@@ -58,6 +58,7 @@ web()->addGroup('/', function () {
         web()->addRoute(['POST'], 'marcar', controller('Guia/marcar'));
 
         web()->addRoute(['GET'], 'contrato', controller('Guia/contrato'));
+        web()->addRoute(['GET'], 'contrato/descargar', controller('Guia/descargaContrato'));
         /**
          *  La peticion para ver una pagina web debe ser GET para que el navegador la despliegue.
          *  primero define bien la ruta.

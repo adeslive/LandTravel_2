@@ -63,14 +63,12 @@ $(function () {
         .done(function(response){
             $('#rutas').html('');
             response.forEach( element => {
-                crearRuta(element.lugar, element.fecha_inicio, element.fecha_salida)
+                crearRuta(element.lugar, element.fecha_inicio, element.fecha_salida, element.pais, element.ciudad)
             });
         });
     }
 
-    function crearRuta(inicio, hi, hs){
-        hi = moment(hi).format('h:mm:ss a Z')
-        hs = moment(hs).format('h:mm:ss a Z')
+    function crearRuta(inicio, hi, hs, pais, ciudad){
 
         let template = 
         `
@@ -80,10 +78,12 @@ $(function () {
                         <div class="row">
                             <div class="col-sm">
                                 <small class="mb-1"><i class="fas fa-map-marker-alt"></i> Inicio: ${inicio}</small><br>
+                                <small class="mb-1"><i class="fas fa-map"></i> Pais: ${pais}</small><br>
                                 <small class="mb-1"><i class="fas fa-hourglass-start"></i> Hora Inicio: ${hi}</small>
                             </div>
                             <div class="col-sm">
                                 <br>
+                                <small class="mb-1"><i class="fas fa-map"></i> Ciudad: ${ciudad}</small><br>
                                 <small class="mb-1"><i class="fas fa-hourglass-end"></i> Hora Salida: ${hs}</small>
                             </div>   
                         </div>
