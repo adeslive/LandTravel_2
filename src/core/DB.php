@@ -52,7 +52,8 @@ final class DB
     const EXECUTED = 1;
     const ERROR = 2;
 
-    const URI = "api:apiPassword1@localhost:3306/final";
+
+    const URI = "api:apiPassword1@landtravel.cflb5buc7ktd.us-east-1.rds.amazonaws.com:3306/final";
 
     public function __construct(LoopInterface $loop, CacheInterface $cache = null, bool $lazy = true)
     {
