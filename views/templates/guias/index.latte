@@ -43,28 +43,30 @@
     </form>
 </div>
 {else}
-<div class="row">
-    <div class="col">
-        <h1 class="display-3 text-center pb-4">Siguiente Tour</h1>
-        <h2 class="display-5 text-center"><span class="active-dot bg-danger mr-3"></span><span id="titulo">...</span>
-        </h2>
-        <div id="rutas" class="list-group" style="overflow-y:scroll; max-height:222px;">
+<div id="region">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-3 text-center pb-4">Siguiente Tour</h1>
+            <h2 class="display-5 text-center"><span class="active-dot bg-danger mr-3"></span><span id="titulo">...</span>
+            </h2>
+            <div id="rutas" class="list-group" style="overflow-y:scroll; max-height:222px;">
+            </div>
+        </div>
+        <div class="col-md-6 mt-2" id="fullcalendar">
+            <div id="calendar"></div>
         </div>
     </div>
-    <div class="col-md-6 mt-2" id="fullcalendar">
-        <div id="calendar"></div>
-    </div>
 </div>
+
 <div class="row">
     <div class="col mt-3">
         <button id="marcar" class="btn btn-primary disabled" disabled>Marcar</button>
         <a type="button" href="guias/pagos" class="btn btn-secundary">Pagos</a>
         <a type="button" href="guias/contrato" class="btn btn-secundary">Contrato</a>
-    </div>
-    <div class="col text-right mt-3">
-
+        <button id="descargar" class="btn btn-primary">Descargar</button>
     </div>
 </div>
+
 {/if}
 
 {include '../components/loading.latte', titulo => 'loading'}
@@ -80,6 +82,9 @@
 <script src="js/completar.js"></script>
 {else}
 <script src="js/moment.js"></script>
+<script src="js/jspdf.min.js"></script>
+<script src="js/addimage.js"></script>
+<script src="js/html2canvas.min.js"></script>
 <script src="js/calendario.js"></script>
 {/if}
 {/block}
