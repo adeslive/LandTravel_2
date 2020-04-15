@@ -2,6 +2,7 @@
 
 namespace RPF\Core;
 
+use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 use RPF\core\SimpleResponse;
 use RPF\Middleware\ResourceHandler;
@@ -26,7 +27,7 @@ final class PDF
         return '';
     }
 
-    public static function createPDFString(string $text, bool $css = false, string $css_dir = "")
+    public static function createPDFString(string $text, bool $css = false, string $css_dir = "") : self
     {
         $mpdf = new Mpdf();
         if ($css) {
@@ -40,12 +41,18 @@ final class PDF
         return new self($path);
     }
 
-    public static function createPDFTemplate(string $template, array $vars = [], bool $css = false, string $css_dir = "")
+    public static function createPDFTemplate(string $template, array $vars = [], array $params = [], bool $css = false, string $css_dir = "") : self
     {
-        $mpdf = new Mpdf();
-        if ($css) {
-            $css = file_get_contents(ResourceHandler::RESOURCE_DIR .'/' . $css_dir);
-            $mpdf->writeHTML($css, 1);
+        $mpdf = new Mpdf($params);
+        if ($css && $css_dir != '') {
+            $path = ResourceHandler::RESOURCE_DIR .'/' . $css_dir;
+            if (file_exists($path)){
+                $css = file_get_contents($path);
+                $mpdf->WriteHTML($css, HTMLParserMode::HEADER_CSS);
+            }else{
+                print "CSS doesn't exist" . PHP_EOL;
+            }
+            
         }
 
         $mpdf->WriteHTML(view($template, $vars, true));

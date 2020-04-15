@@ -1,0 +1,96 @@
+{extends '../base/base.latte'}
+
+{block css}
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/vaucher.css">
+{/block}
+
+{block body}
+<h4>Información del pago mensual | {$pago['fecha_pago']|date:'%d/%m/%Y'}</h4>
+<div class="row">
+    <div class="col text-right">
+        <a class="btn btn-primary" type="button" href="#">Imprimir</a>
+        <a class="btn btn-secondary" type="button" href="{$pago['id']}/descarga">Descargar</a>
+    </div>
+</div>
+
+
+<div class="row" id="tabla-pago">
+    <div class="col-lg-6">
+        <label><b>Ingresos</b></label>
+        <table class="table table-striped  table-hover tablemodificar">
+            <thead>
+                <tr class="active">
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Valor en Dólares</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="success">
+                    <td>Horas este mes</td>
+                    <td>{$pago['horas']}</td>
+                    <td>${$pago['mensual']}</td>
+                </tr>
+                {if $pago['horas_extra'] > 0}
+                <tr class="success">
+                    <td>Horas extra mes</td>
+                    <td>{$pago['horas_extra']}</td>
+                    <td>${$pago['extra']}</td>
+                </tr>
+                {/if}
+            </tbody>
+        </table>
+        <label><b>Deducciones</b></label>
+        <table class="table table-striped  table-hover tablemodificar">
+            <thead>
+                <tr class="active">
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Valor en Dólares</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {if $pago['horas_extra'] > 0}
+                <tr class="success">
+                    {var $deduccion = ($pago['horas'] + $pago['horas_extra'])*0.12}
+                    <td>Deducción con horas extra</td>
+                    <td>-${$pago['deducido']}</td>
+                    
+                </tr>
+                {else}
+                <tr class="success">
+                    <td>Deducción sin horas extra</td>
+                    {if $pago['deducido'] > 0}
+                    <td>-${$pago['deducido']}</td>
+                    {else}
+                    <td>${$pago['deducido']}</td>
+                    {/if}
+                </tr>
+                {/if}
+            </tbody>
+        </table>
+        <label><b>Resumen</b></label>
+        <table class="table table-striped  table-hover tablemodificar">
+            <thead>
+                <tr class="active">
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Valor en Dólares</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="success">
+                    <td>Neto</td>
+                    <td>${$pago['mensual'] + $pago['extra'] - $pago['deducido']}</td>
+                </tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col">
+        <label><b>Tours participados</b></label>
+        {include '../components/tour.latte'}
+    </div>
+</div>
+{/block}

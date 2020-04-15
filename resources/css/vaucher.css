@@ -1,0 +1,139 @@
+.row>div>img {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.submenu {
+    text-align: center;
+    /* position: center; */
+    
+    width: 100%;
+    /* visibility: hidden; */
+    opacity: 0;
+    transition: opacity 1.5s;
+}
+
+
+.submenu li a {
+    text-align: center !important;
+    margin: auto auto;
+    display: block;
+    padding: 10px 20px;
+    padding-right: 20px;
+    text-decoration: none;
+
+}
+
+
+
+
+  .button{
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 300;
+    font-size: 20px;
+    font-style: italic;
+    color: black;
+    padding: 5px 10px 5px 10px;
+   
+    background-color: rgb(255, 87, 51);
+    border-radius: 15px;
+    border: 3px double rgb(255, 87, 51)5;
+  }
+
+  .button:hover{
+    opacity: 0.8;
+    text-decoration: none;
+  }
+
+
+.tablemodificar{
+    margin-top: 10 px;
+    border-color: orangered;
+    border-collapse: separate;
+  border-spacing:  3px;
+  border: 1px solid orangered;
+  
+
+    
+}
+
+#pt{
+    margin-top: 5em;
+    margin-left: 20em;
+    margin-bottom: 3em;
+    
+}
+.table-hover{
+    
+    cursor: pointer;
+   
+    
+
+}
+
+
+.derechos{
+    text-align: center;
+}
+
+h6{
+    color: white;
+}
+
+.letras{
+    color:rgba(7, 6, 5, 0.527) !important; 
+}
+
+  .content-select select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+.content-select select::-ms-expand {
+    display: none;
+}
+.content-select{
+	max-width: 250px;
+	position: relative;
+}
+ 
+.content-select select{
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+  	padding: 7px 10px;
+  	height: 42px;
+  	outline: 0; 
+  	border: 0;
+	border-radius: 0;
+	background: #f0f0f0;
+	color: #7b7b7b;
+	font-size: 1em;
+	color: #999;
+	font-family: 
+	'Quicksand', sans-serif;
+	border:2px solid rgba(0,0,0,0.2);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.25s ease;
+}
+ 
+
+.content-select i{
+	position: absolute;
+	right: 20px;
+	top: calc(50% - 13px);
+	width: 16px;
+	height: 16px;
+	display: block;
+	border-left:4px solid orangered;
+	border-bottom:4px solid orangered;
+	transform: rotate(-45deg); /* Giramos el cuadrado */
+	transition: all 0.25s ease;
+}
+ 
+.content-select:hover i{
+	margin-top: 3px;
+}

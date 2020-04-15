@@ -48,7 +48,13 @@ final class Auth extends Controller
                     ->then(function () use ($data) {
                         return db()->query('select @OUT_codigo;')
                             ->then(function(array $codigo) use ($data){
-                                $data['codigo'] = $codigo[0]['@OUT_ codigo'];
+                                $data['codigo'] = $codigo[0]['@OUT_codigo'];
+
+                                if (!isset($codigo[0]['@OUT_codigo']))
+                                {
+                                    return SimpleResponse::INTERNAL_ERROR('Hubo un problema')->toJson('message');
+                                }
+
                                 Mailer::emailConfirmacion($data, $data['tipo_usuario']);
                                 return SimpleResponse::OK();
                             });
@@ -62,21 +68,42 @@ final class Auth extends Controller
     public static function login(ServerRequestInterface $request)
     {
         $datos = $request->getParsedBody();
-        return db()->query('SELECT id, pnombre, papellido, tipo_usuario, contraseña FROM usuarios WHERE email = ?', [$datos['correo']])
+        return db()->query('SELECT tipo_usuario FROM usuarios WHERE email = ?', [$datos['correo']])
             ->then(function (array $values) use ($datos) {
                 if (empty($values)) {
                     return SimpleResponse::INTERNAL_ERROR('El correo no existe')->toJson('message');
                 };
 
-                if (password_verify($datos['contraseña'], $values[0]['contraseña'])) {
-                    getSession()->begin();
+                if ($values[0]['tipo_usuario'] == 'Guia'){
+                    return db()->query('SELECT contrato_id, tipo_usuario, guia_id, id, pnombre, papellido, contraseña, gentilicio, pasaporte, oficio, estado_civil, direccion FROM guias WHERE email = ?', [$datos['correo']])
+                        ->then(function (array $values) use ($datos) {
+                            if (password_verify($datos['contraseña'], $values[0]['contraseña'])) {
+                                getSession()->begin();
+            
+                                unset($values[0]['contraseña']);
+                                getSession()->setContents($values[0]);
+                                           
+                                return SimpleResponse::OK();
+                            } else {
+                                return SimpleResponse::INTERNAL_ERROR('Contraseña incorrecta')->toJson('message');
+                            }
+                        });
+                }else{
+                    return db()->query('SELECT id, pnombre, papellido, tipo_usuario, contraseña, gentilicio, pasaporte FROM usuarios WHERE email = ?', [$datos['correo']])
+                        ->then(function (array $values) use ($datos) {
 
-                    unset($values[0]['contraseña']);
-                    getSession()->setContents($values[0]);
+                            if (password_verify($datos['contraseña'], $values[0]['contraseña'])) {
+                                getSession()->begin();
+            
+                                unset($values[0]['contraseña']);
+                                getSession()->setContents($values[0]);
+            
+                                return SimpleResponse::OK();
+                            } else {
+                                return SimpleResponse::INTERNAL_ERROR('Contraseña incorrecta')->toJson('message');
+                            }
 
-                    return SimpleResponse::OK();
-                } else {
-                    return SimpleResponse::INTERNAL_ERROR('Contraseña incorrecta')->toJson('message');
+                        });
                 }
             });
     }
@@ -112,6 +139,22 @@ final class Auth extends Controller
         }else{
             return view('usuarios/recuperar');
         }
+    }
+
+    public static function activar(ServerRequestInterface $request, $codigo)
+    {
+        return db()->query('SELECT id FROM usuario WHERE codigo_confirmacion = ?', [$codigo])
+                ->then(function(array $values)  {
+                    return !empty($values) ? resolve() : reject();
+                })
+                ->then(function() use ($codigo){
+                    $result = db()->getResult();
+                    db()->query('UPDATE usuario SET habilitado = 1, codigo_confirmacion = null WHERE id = ?', [$result[0]['id']]);
+                    return view('usuarios/activar',['codigo' => $codigo]);
+                })
+                ->otherwise(function(){
+                    return view('usuarios/activar');
+                });
     }
 
     public static function cambiarContraseña(ServerRequestInterface $request, $codigo)

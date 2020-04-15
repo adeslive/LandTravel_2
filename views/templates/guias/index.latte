@@ -1,0 +1,85 @@
+{extends '../base/base.latte'}
+
+{block css}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.0/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.0/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.4.0/main.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/guia.css">
+{/block}
+
+{block body}
+{if $contrato == null}
+<div class="display-2">Antes de empezar...</div>
+<div class="card card-body">
+    <form id="completar" method="POST">
+        <div class="row">
+            <div class="col">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="pnombre">Oficio</label>
+                        <input type="text" name="oficio" class="form-control" id="pnombre" required>
+                    </div>
+                    
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="papellido">Estado Civil</label>
+                            <select class="form-control ml" name="estado_civil" id="genero">
+                                <option value="Soltero" selected>Soltero</option>
+                                <option value="Casado">Casado</option>
+                                <option value="Viudo">Viudo</option>
+                                <option value="Divorciado">Divorciado</option>
+                                <option value="Unión libre">Unión libre</option>
+                            </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 text-right mt-5">
+                <input type="submit" value="Completar" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+{else}
+<div class="row">
+    <div class="col">
+        <h1 class="display-3 text-center pb-4">Siguiente Tour</h1>
+        <h2 class="display-5 text-center"><span class="active-dot bg-danger mr-3"></span><span id="titulo">...</span>
+        </h2>
+        <div id="rutas" class="list-group" style="overflow-y:scroll; max-height:222px;">
+        </div>
+    </div>
+    <div class="col-md-6 mt-2" id="fullcalendar">
+        <div id="calendar"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col mt-3">
+        <button id="marcar" class="btn btn-primary disabled" disabled>Marcar</button>
+        <a type="button" href="guias/pagos" class="btn btn-secundary">Pagos</a>
+        <a type="button" href="guias/contrato" class="btn btn-secundary">Contrato</a>
+    </div>
+    <div class="col text-right mt-3">
+
+    </div>
+</div>
+{/if}
+
+{include '../components/loading.latte', titulo => 'loading'}
+{include '../components/error.latte', titulo => 'error'}
+{include '../components/ok.latte', titulo => 'ok'}
+{/block}
+
+{block scripts}
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.4.0/main.min.js"></script>
+{if $contrato == null}
+<script src="js/completar.js"></script>
+{else}
+<script src="js/moment.js"></script>
+<script src="js/calendario.js"></script>
+{/if}
+{/block}

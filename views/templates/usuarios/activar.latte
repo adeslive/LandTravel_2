@@ -1,0 +1,38 @@
+{extends '../base/base.latte'}
+
+{block css}
+    <link rel="stylesheet" href="css/recuperar.css">
+    <link rel="stylesheet" href="css/main.css">
+{/block}
+
+{block body}
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="align-content: left;">
+            
+            {ifset $codigo}
+            <section id="div-contraseña" class="recover card card-body">
+                <h1>Activación</h1>
+                <p style="font-size: 20px;">Hecho!.</p s>
+            </section>
+            
+            {else}
+            <section id="div-invalido" class="recover card card-body">
+                <h1>Activación</h1>
+                <p style="font-size: 20px;">El código es inválido, por favor contacte a soporte.</p s>
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="/" class="btn btn-primary" type="button">Inicio</a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {/ifset}
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+
+{/block}

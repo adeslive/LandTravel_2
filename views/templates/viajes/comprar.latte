@@ -78,6 +78,10 @@
         </form>
     </div>
 </div>
+
+{include '../components/loading.latte', titulo => 'loading'}
+{include '../components/error.latte', titulo => 'error'}
+{include '../components/ok.latte', titulo => 'ok'}
 {/block}
 
 {block scripts}

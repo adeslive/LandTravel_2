@@ -53,11 +53,7 @@ final class Mailer
         $latte = new Engine();
         $subject = 'Credenciales de usuario';
 
-        if ($tipo == 'Guía'){
-            $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/guia.latte', $data);
-        }else{
-            $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/cliente.latte', $data);
-        }
+        $body = $latte->renderToString(View::TEMPLATE_DIR . '/mail/cliente.latte', ['codigo' => $data['codigo']]);
 
         $mail = new self($data['correo'], $subject, $body);
         $mail->send();

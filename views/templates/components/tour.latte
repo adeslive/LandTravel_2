@@ -1,0 +1,29 @@
+<div class="list-group tours">
+    {ifset $tours}
+    {foreach $tours as $tour}
+    <div class="tour list-group-item list-group-item-action flex-column align-items-start">
+        <div class="container-fluid">
+            <div class="row">
+                    {if $tour['horas'] > 8}
+                        {var $horas_extra = $tour['horas'] - 8}
+                        {var $horas = 8}
+                    {else}
+                        {var $horas_extra = 0}
+                    {/if}
+                <div class="col-sm w-100">
+                    <small class="mb-1"><i class="fas fa-map"></i> Tour: {$tour['nombre']}</small><br>
+                    <small class="mb-1"><i class="fas fa-clock"></i> Horas Trabajadas: {$horas}</small><br>
+                    <small class="mb-1"><i class="fas fa-clock"></i> Fecha Inicio: {$tour['fecha_inicio']|date:'%d/%m/%Y %H:%M'}</small>
+                </div>
+                <div class="col-sm w-100">
+                    
+                    <small class="mb-1"><i class="fas fa-money-bill"></i> Pago Total: ${$horas*4 + $horas_extra*8}</small><br>
+                    <small class="mb-1"><i class="fas fa-clock"></i> Horas Extra: {$horas_extra}</small><br>
+                    <small class="mb-1"><i class="fas fa-clock"></i> Fecha Fin: {$tour['fecha_salida']|date:'%d/%m/%Y %H:%M'}</small>         
+                </div>   
+            </div>
+        </div>
+    </div>
+    {/foreach}
+    {/ifset}
+</div>

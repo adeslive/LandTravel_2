@@ -1,0 +1,55 @@
+{extends '../base/base.latte'}
+
+{block css}
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/vaucher.css">
+{/block}
+
+{block body}
+
+
+<div class="row">
+    <div class="col">
+        <div class="accordion" id="pagos">
+            {foreach $años as $año}
+            <div class="card">
+                <div class="card-header" id="heading-{$año}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{$año}" aria-expanded="true" aria-controls="collapseOne">
+                        {$año}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse-{$año}" class="collapse" aria-labelledby="heading-{$año}" data-parent="#pagos">
+                    <div class="card-body">
+                        <div class="row">
+                            {for $i = 0; $i < count($pagos[$año]); $i++}
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">{$pagos[$año][$i]['fecha_pago']|date:'%d/%m/%Y'}</h5>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text">Pagado: ${$pagos[$año][$i]['mensual'] + $pagos[$año][$i]['extra']}<br>Deducido: ${$pagos[$año][$i]['deducido']}</p>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="pagos/{$pagos[$año][$i]['id']}"type="button">Mas información</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/for}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+</div>
+{/block}
