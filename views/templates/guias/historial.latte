@@ -47,21 +47,20 @@
 					<th scope="col">Fecha de Inicio</th>
 					<th scope="col">Fecha de Finalización</th>
 					<th scope="col">Horas Trabajadas</th>
+					<th scope="col"># Atendidos</th>
 				</tr>
 			</thead>
 			<tbody class="table-striped">
-
 				{foreach $tours as $tour}
 				<tr>
 					<td>{$tour['nombre']}</td>
 					<td>{$tour['ciudad']}</td>
-					<td>{$tour['fecha_inicio']}</td>
-					<td>{$tour['fecha_salida']}</td>
+					<td>{$tour['fecha_inicio']|date:'%d/%m/%Y'}</td>
+					<td>{$tour['fecha_salida']|date:'%d/%m/%Y'}</td>
 					<td>{$tour['horas']}</td>
+					<td>{$tour['numero_personas']}</td>
 				</tr>
 				{/foreach}
-
-
 			</tbody>
 		</table>
 	</div>

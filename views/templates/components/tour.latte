@@ -11,12 +11,12 @@
                         {var $horas_extra = 0}
                     {/if}
                 <div class="col-sm w-100">
+                    <small class="mb-1"><i class="fas fa-users"></i> # Atendidos: {$tour['numero_personas']}</small><br>
                     <small class="mb-1"><i class="fas fa-map"></i> Tour: {$tour['nombre']}</small><br>
                     <small class="mb-1"><i class="fas fa-clock"></i> Horas Trabajadas: {$horas}</small><br>
                     <small class="mb-1"><i class="fas fa-clock"></i> Fecha Inicio: {$tour['fecha_inicio']|date:'%d/%m/%Y %H:%M'}</small>
                 </div>
                 <div class="col-sm w-100">
-                    
                     <small class="mb-1"><i class="fas fa-money-bill"></i> Pago Total: ${$horas*4 + $horas_extra*8}</small><br>
                     <small class="mb-1"><i class="fas fa-clock"></i> Horas Extra: {$horas_extra}</small><br>
                     <small class="mb-1"><i class="fas fa-clock"></i> Fecha Fin: {$tour['fecha_salida']|date:'%d/%m/%Y %H:%M'}</small>         
