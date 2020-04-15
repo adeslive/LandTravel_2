@@ -36,7 +36,7 @@ $api = new Server([
 
 $web = new Server([
     new ResourceHandler(__DIR__ . DIRECTORY_SEPARATOR . 'resources'),
-    new SessionMiddleware('REACTPHP_SESSION',$cache,[600 ,'','',false,false]),
+    new SessionMiddleware('REACTPHP_SESSION',$cache,[0 ,'','',false,false]),
     new Initiator($loop),
     new Router(ROUTER::WEB)
 ]);

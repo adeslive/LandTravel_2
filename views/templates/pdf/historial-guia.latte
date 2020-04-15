@@ -1,0 +1,38 @@
+<div id="region">
+	<div class="rotulo">
+		<h1>HISTORIAL DE RUTAS ASIGNADAS Y CUBIERTAS</h1><br><br>
+	</div>
+
+	<div class="row control" style="margin: auto; width: 50%;">
+        {ifset $start}
+        <h3>Desde: {$start|date:'%d/%m/%Y'}  Hasta: {$end|date:'%d/%m/%Y'}</h3>
+		{else}
+        <h3>Hasta: {$end|date:'%d/%m/%Y'}</h3>
+        {/ifset}
+	</div>
+
+	<div class="tabla">
+		<table class="table table-sm mt-5">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Nombre del Tour</th>
+					<th scope="col">Ciudad</th>
+					<th scope="col">Fecha de Inicio</th>
+					<th scope="col">Fecha de Finalización</th>
+					<th scope="col">Horas Trabajadas</th>
+				</tr>
+			</thead>
+			<tbody class="table-striped">
+				{foreach $tours as $tour}
+				<tr>
+					<td>{$tour['nombre']}</td>
+					<td>{$tour['ciudad']}</td>
+					<td>{$tour['fecha_inicio']|date:'%d/%m/%Y'}</td>
+					<td>{$tour['fecha_salida']|date:'%d/%m/%Y'}</td>
+					<td>{$tour['horas']}</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>

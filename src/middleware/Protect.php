@@ -19,6 +19,7 @@ final class Protect
     public function __invoke(ServerRequestInterface $request, ... $params)
     {
         if ($this->check()){
+            if (sizeof($params) == 0) return (new Activator($this->to_protect))($request);
             return (new Activator($this->to_protect))($request, $params[0]);
         }
         return redirect('/');

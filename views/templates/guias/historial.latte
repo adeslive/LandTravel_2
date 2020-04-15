@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="descarga">
-						<button class="btn btn-primary" id="descargar" type="button">descargar</button>
+						<button class="btn btn-primary" id="descargar" type="button">Descargar</button>
 					</div>
 				</div>
 			</form>
@@ -66,6 +66,9 @@
 		</table>
 	</div>
 </div>
+{include '../components/loading.latte', titulo => 'loading'}
+{include '../components/error.latte', titulo => 'error'}
+{include '../components/ok.latte', titulo => 'ok'}
 {/block}
 
 {block scripts}
