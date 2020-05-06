@@ -1,13 +1,13 @@
 {ifset $viajes}
   <div class="row">
   {foreach $viajes as $viaje}
-    <div class="col">
-      <div class="card mb-3" style="max-width: 540px;">
+    <div class="col-sm-6">
+      <div class="card mb-3">
         <div class="row no-gutters">
-          <div class="col-md-4">
+          <div class="col">
             <img src="img/test.jpg"  class="card-img" alt="..." style="min-width:100%;min-height:100%;">
           </div>
-          <div class="col-md-8">
+          <div class="col-sm-8">
             <div class="card-body">
               <h5 class="card-title">{$viaje['titulo']} <small class="text-muted">${$viaje['costo']}</small> </h5>
               <p class="card-text">{$viaje['descripcion']}</p>
@@ -16,7 +16,7 @@
                 <div class="mb-3 btn-group" role="group">
                   <a class="btn btn-primary" href="{$viaje['id']}"> Mas detalles </a> 
                   <a class="btn btn-danger" href="{$viaje['id']}/modificar">Modificar</a>
-                  <a class="btn btn-warning" href="{$viaje['id']}/eliminar">Eliminar</a>
+                  <a class="btn btn-warning eliminar" href="{$viaje['id']}/eliminar">Eliminar</a>
                 </div>
                 {elseif $user['tipo_usuario'] == 'Guia'}
                 <div class="mb-3 btn-group" role="group">

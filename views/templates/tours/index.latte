@@ -1,0 +1,15 @@
+{extends '../base/base.latte'}
+
+{block body}
+	<div class="text-right mb-3">
+		<a href=""id="new-tour" type="button"><i class="fas fa-plus-circle" style="width:16px;height:16px;"></i> Nuevo Tour</a>
+	</div>
+	
+    {include '../components/tours.latte'}
+
+	{include '../components/modal-decision.latte', titulo => 'decision'}
+{/block}
+
+{block scripts}
+<script src="js/tours.js"></script>
+{/block}

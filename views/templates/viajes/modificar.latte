@@ -5,119 +5,272 @@
 <link rel="stylesheet" href="css/modificar-viaje.css">
 {/block}
 
-{block body}
-<div class="row">
-    <div class="col">
-        <div class="text-center">
-            <img class="img-fluid rounded viaje-img" src="img/test.jpg" alt="...">
-        </div>
-        <div class="mt-4 ml-3">
-            <h3 class="my-3">Descripción del viaje</h3>
-            <form id="viaje-form" method="POST">
-                <textarea class="text-justify" max-length=500 rows="4" cols="51"> {$viaje['descripcion']} </textarea>
-                <h3 class="my-3">Detalles</h3>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="cupos">Paquetes disponibles</label>
-                                <input type="numeric" name="cupos" class="form-control" id="cupos"
-                                    value="{$viaje['cupos']}" placeholder="{$viaje['cupos']}" required>
-                            </div>
-                            <div class="form-group col">
-                                <label for="costo">Costo</label>
-                                <input type="numeric" name="costo" class="form-control" id="costo"
-                                    placeholder="${$viaje['costo']}" value="${$viaje['costo']}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="numero_adultos">Adultos</label>
-                                <input type="numeric" name="numero_adultos" class="form-control" id="numero_adultos"
-                                    placeholder="{$viaje['numero_adultos']}" value="{$viaje['numero_adultos']}"
-                                    required>
-                            </div>
-                            <div class="form-group col">
-                                <label for="numero_niños">Niños</label>
-                                <input type="numeric" name="numero_niños" class="form-control" id="numero_niños"
-                                    placeholder="{$viaje['numero_niños']}" value="{$viaje['numero_niños']}" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="fecha_inicio">Fecha de inicio</label>
-                                <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio"
-                                    placeholder="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}"
-                                    value="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}" required>
+{block container}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body mb-2 ">
+                        <form id="descripcion-form" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <h5 class="card-title">Titulo</h5>
+                                    <input class="form-control" type="text" value="{$viaje['titulo']}" name="titulo">
+                                </div>
+                                
                             </div>
 
-                            <div class="form-group col">
-                                <label for="hora">Hora (GMT +0) </label>
-                                <input type="time" name="hora" class="form-control" id="hora"
-                                    placeholder="{$viaje['fecha_inicio']|date:'%H:%M'}"
-                                    value="{$viaje['fecha_inicio']|date:'%H:%M'}" required>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <h5 class="card-title">Descripción del viaje</h5>
+                                    <textarea name="descripcion" class="text-justify form-control" max-length=500
+                                        rows="5">{$viaje['descripcion']} </textarea>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <input id="change-viaje" class="btn btn-primary my-3 py-2" type="button" value="Cambiar">
-                        <input id="reset-viaje" class="btn btn-secondary my-3 py-2" type="button" value="Reiniciar">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="col">
-        <div class="container">
-            {include '../components/rutas.latte'}
-            <div class="mt-3">
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="cupos">Paquetes disponibles</label>
-                        <input type="numeric" name="cupos" class="form-control" id="cupos" value="{$viaje['cupos']}"
-                            placeholder="{$viaje['cupos']}" required>
-                    </div>
-                    <div class="form-group col">
-                        <label for="costo">Costo</label>
-                        <input type="numeric" name="costo" class="form-control" id="costo"
-                            placeholder="${$viaje['costo']}" value="${$viaje['costo']}" required>
+
+                            <div class="form-row">
+                                <div class="form-group col mt-2">
+                                    <input type="submit" class="btn btn-primary">
+                                    <input type="reset" class="btn btn-secondary">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="custom-control custom-switch text-right">
+                                    <input type="checkbox" class="custom-control-input" id="habilitado" {if $viaje['habilitado'] == 1} checked {/if}>
+                                    <label class="custom-control-label" for="habilitado">Habilitado</label>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="numero_adultos">Adultos</label>
-                        <input type="numeric" name="numero_adultos" class="form-control" id="numero_adultos"
-                            placeholder="{$viaje['numero_adultos']}" value="{$viaje['numero_adultos']}" required>
-                    </div>
-                    <div class="form-group col">
-                        <label for="numero_niños">Niños</label>
-                        <input type="numeric" name="numero_niños" class="form-control" id="numero_niños"
-                            placeholder="{$viaje['numero_niños']}" value="{$viaje['numero_niños']}" required>
+                <div class="col">
+                    <div id="travel-details" class="card card-body">
+                        <form id="viaje-form" method="POST">
+                            <h5 class="card-title">Detalles</h5>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="cupos">Paquetes disp.</label>
+                                    <input type="numeric" name="cupos" class="form-control" id="cupos" value="{$viaje['cupos']}"
+                                        placeholder="{$viaje['cupos']}" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="tipo_viaje">Tipo de viaje</label>
+                                    <select id="tipo_viaje" class="form-control" name="tipo_viaje">
+                                        {foreach $tipos as $tipo}
+                                        <option value="{$tipo['id']}" {if $viaje['tipo_viaje_id']==$tipo['id']}selected{/if}>
+                                            {$tipo['descripcion']}
+                                        </option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="numero_adultos">Adultos</label>
+                                    <input type="numeric" name="numero_adultos" class="form-control" id="numero_adultos"
+                                        placeholder="{$viaje['numero_adultos']}" value="{$viaje['numero_adultos']}" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="numero_niños">Niños</label>
+                                    <input type="numeric" name="numero_niños" class="form-control" id="numero_niños"
+                                        placeholder="{$viaje['numero_niños']}" value="{$viaje['numero_niños']}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="fecha_inicio">Fecha Inicio</label>
+                                    <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio"
+                                        placeholder="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}"
+                                        value="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col mt-2">
+                                    <input type="submit" class="btn btn-primary">
+                                    <input type="reset" class="btn btn-secondary">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="fecha_inicio">Fecha de inicio</label>
-                        <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio"
-                            placeholder="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}"
-                            value="{$viaje['fecha_inicio']|date:'%Y-%m-%d'}" required>
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="hora">Hora (GMT +0) </label>
-                        <input type="time" name="hora" class="form-control" id="hora"
-                            placeholder="{$viaje['fecha_inicio']|date:'%H:%M'}"
-                            value="{$viaje['fecha_inicio']|date:'%H:%M'}" required>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body">
+                        <h3 class="card-title">Rutas</h3>
+                        {include '../components/rutas.latte', modify => true}
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div class="col">
+            <div class="card card-body">
+                <form id="newroute" method="POST">
+                    <div class="form-row" id="div-inicio">
+                        <div class="form-group col">
+                            <label for="pais_inicio">País</label>
+                            <select id="pais_inicio" class="form-control">
+                                {foreach $paises as $pais}
+                                <option value="{$pais['id']}">{$pais['nombre']}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+
+                        <div class="form-group col">
+                            <label for="inicios">Inicio</label>
+                            <select id="inicios" name="inicios" class="form-control">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-2 mt-2 text-right" id="button-submit-ruta">
+                            <br><button id="add" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </div>
+
+                    <div class="form-row" id="div-destino">
+                        <div class="form-group col-sm-5">
+                            <label for="pais">País</label>
+                            <select id="pais" class="form-control">
+                                {foreach $paises as $pais}
+                                <option value="{$pais['id']}">{$pais['nombre']}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-5">
+                            <label for="destinos">Destino</label>
+                            <select id="destinos" name="destino" class="form-control" disabled>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="hora_salida">Hora Salida </label>
+                            <input type="time" name="hora_salida" class="form-control" id="hora_salida"
+                                value="00:00" placeholder="00:00">
+                            <small>* Aproximado</small>
+                        </div>
+                    </div>
+
+                    <div class="card card-body form-row mb-2 ">
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="transporte">Transporte </label>
+                                <select id="transporte" class="form-control" name="transporte" disabled>
+                                </select>
+                                <small id="msj-pasada"></small>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="costo_transporte">Costo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="numeric" class="form-control" id="costo_transporte" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="tiempo_viaje">Tiempo de viaje </label>
+                                <input type="time" name="tiempo_viaje" class="form-control" value="00:00"id="tiempo_viaje"
+                                    placeholder="00:00" disabled>
+                                <small>* Aproximado</small>
+                            </div>
+                            <div class="form-group col">
+                                <label for="fecha_llegada">Fecha de llegada</label>
+                                <input type="date" name="fecha_llegada" class="form-control" value="00:00" id="fecha_llegada"
+                                    disabled>
+                            </div>
+                            <div class="form-group col">
+                                <label for="hora_llegada">Hora de llegada</label>
+                                <input type="time" name="hora_llegada" class="form-control" id="hora_llegada" value="00:00" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body form-row mb-2">
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="hotel">Hotel </label>
+                                <select id="hotel" class="form-control" name="hotel" disabled>
+                                    <option value="0">Sin hotel</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="numero_noches">Numero noches</label>
+                                <input type="numeric" name="numero_noches" class="form-control" id="numero_noches"
+                                    value="0" disabled>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="costo_hotel">Costo/noche</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="numeric" name="costo_hotel" class="form-control" id="costo_hotel"
+                                        value="0" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-body form-row">
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="tour">Tour </label>
+                                <select id="tour" class="form-control" name="tour" disabled>
+                                    <option value="0">Sin tour</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="costo_tour">Costo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="numeric" class="form-control" id="costo_tour" value="0" disabled>
+                                </div>
+
+                            </div>
+                            <div class="form-group col">
+                                <label for="inicio_tour">Inicio</label>
+                                <div class="input-group">
+                                    <input type="time" class="form-control" id="inicio_tour" value="00:00" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="duracion_tour">Fin</label>
+                                <div class="input-group">
+                                    <input type="time" class="form-control" id="duracion_tour" value="00:00" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+{include '../components/modal-modificar-ruta.latte', titulo => 'modificar'}
 {/block}
 
 {block scripts}
+<script src="js/moment.js"></script>
 <script src="js/modificar-viaje.js"></script>
 {/block}

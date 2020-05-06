@@ -1,0 +1,29 @@
+{ifset $tours}
+<div class="row">
+    {var $i = 1}
+    {foreach $tours as $tour}
+    <div class="col-sm-6">
+        <div class="card mb-3">
+        
+            <div class="row no-gutters">
+                <div class="col">
+                    <h1 class="display-1 ml-4">{$i}</h1>
+                </div>
+                <div class="col-sm-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{$tour['title']} <small class="text-muted">${$tour['costo']}</small>
+                        </h5>
+                        <p class="card-text">{$tour['descripcion']}</p>
+                        <div class="mb-3 btn-group" role="group">
+                            <a class="btn btn-danger" href="{$tour['id']}/modificar">Modificar</a>
+                            <a class="btn btn-warning eliminar" href="{$tour['id']}/eliminar">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {var $i = $i + 1}
+    {/foreach}
+</div>
+{/ifset}

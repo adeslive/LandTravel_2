@@ -1,0 +1,29 @@
+<div class="list-group rutas">
+    {var $i = 1}
+    {foreach $rutas as $ruta}
+    <div class="ruta list-group-item list-group-item-action flex-column align-items-start" data-number="{$i}" data-lugar="{$ruta['lugar_id']}">
+        <div class="container-fluid">
+        {ifset $modify} 
+            <div id="ruta{$i}" data-id="{$ruta['id']}"/> 
+        {/ifset}
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <h6 class="card-title">{$ruta['lugar']}</h6><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm w-100">
+                            <small class="mb-1"><i class="fas fa-hourglass-start"></i> Hora Inicio: {$ruta['fecha_inicio']|date:'%H:%M:%S'}</small>
+                        </div>
+                        
+                        <div class="col-sm w-100">
+                            <small class="mb-1" id="hora_llegada-ruta{$i}"><i class="fas fa-hourglass-start"></i> Hora Fin: {$ruta['fecha_salida']|date:'%H:%M:%S'}</small>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   {var $i += 1}
+    {/foreach}
+</div>

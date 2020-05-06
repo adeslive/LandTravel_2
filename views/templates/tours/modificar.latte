@@ -1,0 +1,109 @@
+{extends '../base/base.latte'}
+
+{block css}
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/modificar-viaje.css">
+{/block}
+
+{block container}
+<div class="container-fluid">
+    <div class="text-center" ><h4 class="card-title">Tour de {$tour['nombre_pais']}</h4></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body mb-2 ">
+                        <form id="descripcion-form" method="POST">
+                            
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <h5 class="card-title">Titulo</h5>
+                                    <input class="form-control" type="text" value="{$tour['title']}" name="titulo">
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <h5 class="card-title">Costo ($)</h5>
+                                    <input class="form-control" type="numeric" value="{$tour['costo']}" name="costo">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <h5 class="card-title">Descripción del tour</h5>
+                                    <textarea name="descripcion" class="text-justify form-control" max-length=500
+                                        rows="5">{$tour['descripcion']}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-4">
+                                <div class="form-group col mt-2">
+                                    <input type="submit" class="btn btn-primary">
+                                    <input type="reset" class="btn btn-secondary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div id="travel-details" class="card card-body">
+                        <form id="agregar-ruta" method="POST">
+                            <h5 class="card-title">Agregar</h5>
+                            <div class="form-row">
+                    
+                                <div class="form-group col">
+                                    <label for="lugar">Lugar</label>
+                                    <select id="lugar" class="form-control" name="lugar">
+                                    {foreach $lugares as $lugar}
+                                        {if $lugar['pais_id'] == $tour['pais_id']}
+                                            <option value="{$lugar['id']}">
+                                                {$lugar['nombre']}
+                                            </option>
+                                        {/if}
+                                    {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="fecha_inicio">Hora Inicio</label>
+                                    <input type="time" name="fecha_inicio" class="form-control" id="fecha_inicio"
+                                        value="{$rutas[sizeof($rutas)-1]['fecha_salida']}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="fecha_fin">Hora Fin</label>
+                                    <input type="time" name="fecha_fin" class="form-control" id="fecha_fin"
+                                        value="{$rutas[sizeof($rutas)-1]['fecha_salida']}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col mt-2">
+                                    <input type="submit" class="btn btn-primary">
+                                    <input type="reset" class="btn btn-secondary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body">
+                <h3 class="card-title">Rutas</h3>
+                {include '../components/rutas-tour.latte', modify => true}
+            </div>
+        </div>
+    </div>
+</div>
+
+{include '../components/modal-modificar-ruta.latte', titulo => 'modificar'}
+{/block}
+
+{block scripts}
+<script src="js/moment.js"></script>
+<script src="js/modificar-tour.js"></script>
+{/block}

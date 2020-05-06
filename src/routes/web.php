@@ -35,7 +35,31 @@ web()->addGroup('/', function () {
 
         web()->addRoute(['POST', 'GET'], '{id:\d+}/reservar', controller('Viaje/reservar'));
 
+        web()->addRoute(['POST'], 'crearViaje', controller('Viaje/crearViaje'));
+
         web()->addRoute(['GET'], '{id:\d+}/modificar', controller('Viaje/paginaModificar'));
+
+        web()->addRoute('PUT', '{id:\d+}/modificar/detalles', controller('Viaje/modificarDetalles'));
+
+        web()->addRoute('PUT', '{id:\d+}/modificar/descripcion', controller('Viaje/modificarDescripcion'));
+
+        web()->addRoute('POST', '{id:\d+}/modificar/habilitar', controller('Viaje/habilitar'));
+
+        web()->addRoute('DELETE', '{id:\d+}/eliminar', controller('Viaje/borrarViaje'));
+    });
+
+    // Rutas Rutas Viaje
+    web()->addGroup('rutas/', function () {
+        web()->addRoute(['POST'], '{ruta_id: \d+}', controller('RutaViaje/get_ruta'));
+        web()->addRoute(['POST'], 'viaje/{viaje_id: \d+}', controller('RutaViaje/nueva_ruta'));
+        web()->addRoute(['DELETE'], '{ruta_id: \d+}', controller('RutaViaje/borrar_ruta'));
+    });
+
+
+    web()->addGroup('reportes/', function () {
+        web()->addRoute(['GET'], 'empleados', controller('Reportes/reporte_empleados'));
+        web()->addRoute(['GET'], 'ganancias', controller('Reportes/reporte_ganancias'));
+        web()->addRoute(['GET'], 'turistas', controller('Reportes/reporte_turistas'));
     });
 
     // Rutas Guias
@@ -68,5 +92,27 @@ web()->addGroup('/', function () {
         web()->addRoute(['GET'], 'contrato/{id}', controller('Guia/contratoGuia'));
 
         web()->addRoute(['GET'], 'feed', controller('Guia/feed'));
+    });
+
+    web()->addGroup('pais/', function () {
+        web()->addRoute(['GET'], '{id}/destinos', controller('Pais/getDestinos'));
+        web()->addRoute(['GET'], '{id}/lugares', controller('Pais/getLugares'));
+        web()->addRoute(['GET'], '{id}/hoteles', controller('Pais/getHoteles'));
+        web()->addRoute(['GET'], '{id}/transportes', controller('Pais/getTransportes'));
+        web()->addRoute(['GET'], '{id}/tours', controller('Pais/getTours'));
+    });
+
+    web()->addGroup('tours/', function () {
+        web()->addRoute(['GET'], '', controller('Tours/index'));
+        web()->addRoute(['POST'], 'crearTour', controller('Tours/crearTour'));
+        web()->addRoute(['DELETE'], '{id:\d+}/eliminar', controller('Tours/eliminar'));
+        web()->addRoute(['GET'], '{id:\d+}/modificar', controller('Tours/modificar'));
+        web()->addRoute(['POST'], '{id:\d+}/modificar/nuevaRuta', controller('Tours/nuevaRuta'));
+        web()->addRoute(['DELETE'], '{id:\d+}/modificar/borrarRuta', controller('Tours/borrarRuta'));
+        web()->addRoute(['POST'], '{id:\d+}/modificar/descripcion', controller('Tours/modificarDescripcion'));
+    });
+
+    web()->addGroup('utils/', function () {
+        web()->addRoute(['GET'], 'distancia', controller('Viaje/getDistancia'));
     });
 });

@@ -1,0 +1,82 @@
+{extends '../base/base.latte'}
+
+{block body}
+<div class="content " style="margin-top: 2em;">
+    <div class="col col-lg-12" style="margin-bottom:3em;">
+        <h1><i class="fas fa-user-alt fa-2x anarajado"></i> Reporte De Empleados  {$mes}/{$año}</h1>
+    </div>
+    <div class="row">
+        <form action="" style="margin-bottom: 3em;width: 100%;margin-left: 10%;" method="get">
+            <div class="col col-lg-3" style="float: left;">
+                <h4>Año</h4>
+                <select class="form-control" name="año" id="">
+                    {foreach $años as $año}
+                        <option value="{$año}">{$año}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div style="float: left;" class="col col-lg-3">
+                <h4>Mes</h4>
+                <select class="form-control" name="mes" id="">
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+
+
+            <div class="col col-lg-3" style="float: left;padding-top: 36px">
+
+                <button class="btn botones"><i class="fas fa-eye color"></i> Mostrar </button>
+
+            </div>
+
+        </form>
+    </div>
+    <div class="card text-center">
+        <div class="card-header estilotarjeta">
+            Detalles
+        </div>
+        <div class="card-body">
+            <table class="table thead-light table-striped tablacolor table-hover divfondo  "
+                style="margin-bottom: 5em;width: 80%;margin-left: 5em; text-align: center;">
+                <thead class="coloricono tableheader">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Pasaporte</th>
+                        <th scope="col">Primer Nombre</th>
+                        <th scope="col">Primer Apellido</th>
+                        <th scope="col">Pais De Residencia</th>
+                        <th scope="col">Salario De El Mes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {var $i = 1}
+                    {foreach $pagos as $pago}
+                    <tr>
+                        <th scope="row">{$i}</th>
+                        <td>{$pago['pasaporte']}</td>
+                        <td>{$pago['pnombre']}</td>
+                        <td>{$pago['papellido']}</td>
+                        <td>{$pago['pais']}</td>
+                        <td>${$pago['mensual'] + $pago['extra'] - $pago['deducido']}</td>
+                    </tr>
+                    {var $i = $i + 1}
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-muted  estilotarjeta">
+        </div>
+    </div>
+</div>
+{/block}

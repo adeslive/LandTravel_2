@@ -26,6 +26,11 @@ final class SimpleResponse extends Response
         );
     }
 
+    public function setConverted(bool $state)
+    {
+        $this->converted = $state;
+    }
+
     public function toJson(string $key = '')
     {
         $response = $this->withoutHeader('Content-type');

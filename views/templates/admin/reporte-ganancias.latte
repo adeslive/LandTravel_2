@@ -1,0 +1,191 @@
+{extends '../base/base.latte'}
+
+{block body}
+<div class="content " style="margin-top: 2em;">
+    <div class="col col-lg-12" style="margin-bottom: 2em;">
+        <h1><i class="fas fa-user-alt fa-2x anarajado"></i>Reporte De Ganancias {$mes}/{$año}</h1>
+    </div>
+
+
+
+    <div class="row">
+
+        <form action="" style="margin-bottom: 3em;width: 100%;margin-left: 10%;" method="get">
+            <div class="col col-lg-3" style="float: left;">
+                <h4>Año</h4>
+                <select class="form-control" name="año" id="">
+                    {foreach $años as $año}
+                        <option value="{$año}">{$año}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div style="float: left;" class="col col-lg-3">
+                <h4>Mes</h4>
+                <select class="form-control" name="mes" id="">
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+
+            <div class="col col-lg-3" style="float: left;padding-top: 36px">
+                <button class="btn botones"><i class="fas fa-eye color"></i> Mostrar </button>
+            </div>
+        </form>
+        <div class="col-lg-4">
+            <div class="card border-success mb-3" style="max-width: 18rem;  height: 31em;">
+                <div class="card-header bg-transparent border-success estilotarjeta">Ingresos</div>
+                <div class="card-body text-success">
+                    <table class="table thead-light table-striped tablacolor table-hover divfondo round_table"
+                        style="width: 16rem;">
+                        <thead class="coloricono thead-green tableheader ">
+                            <tr>
+                                <th scope="col">DETALLES</th>
+                                <th scope="col">VALOR EN $</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Comision Por Venta</th>
+                                <td>{$ganancias}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Comision Por publicidad</th>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Total</th>
+                                <td>{var ingresos = $ganancias + 200}{$ingresos}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-success estilotarjeta"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-success mb-3" style="max-width: 20rem; height: 31em;">
+                <div class="card-header bg-transparent border-success estilotarjeta">Egresos</div>
+                <div class="card-body text-success">
+
+
+
+                    <table class="table thead-light table-striped tablacolor table-hover divfondo round_table"
+                        style="width: 18rem;">
+                        <thead class="coloricono thead-green  tableheader">
+                            <tr>
+                                <th scope="col">DETALLES</th>
+                                <th scope="col">VALOR EN $</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Pagos Por Planilla</th>
+
+                                <td>{$planilla}</td>
+
+
+
+
+                            </tr>
+                            <tr>
+                                <th scope="row">Gastos Administrativos</th>
+
+
+                                <td>200</td>
+
+
+                            </tr>
+                            <tr>
+
+
+                                <th scope="row">Gastos Operativos</th>
+
+                                <td>200</td>
+
+
+
+
+                            </tr>
+                            <tr>
+
+
+                                <th scope="row">Impuestos </th>
+
+                                <td>200</td>
+
+
+
+                            </tr>
+                            <tr>
+
+
+                                <th scope="row">Total</th>
+
+                                <td>{var egresos = $planilla + 200*3}{$egresos}</td>
+
+
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="card-footer bg-transparent border-success estilotarjeta"></div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-success mb-3" style="max-width: 18rem;  height: 31em;">
+                <div class="card-header bg-transparent border-success estilotarjeta">Utilidad O Perdida</div>
+                <div class="card-body text-success">
+
+
+
+                    <table class="table thead-light table-striped tablacolor table-hover divfondo round_table"
+                        style="width: 15rem;">
+                        <thead class="coloricono thead-green tableheader ">
+                            <tr>
+                                <th scope="col">DETALLES</th>
+                                <th scope="col">VALOR EN $</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Utilidad</th>
+                                <td>{$ingresos}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Perdida</th>
+                                <td>{$egresos}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Total</th>
+                                <td>{$ingresos-$egresos}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-success estilotarjeta"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

@@ -13,11 +13,9 @@
 
 .rutas
 {
+  width: 100%;
   overflow-y: hidden;
-  max-height: 315px;
-}
-
-.rutas:hover{
+  font-size: small;
   overflow-y: scroll;
+  max-height: 280px;
 }
-
